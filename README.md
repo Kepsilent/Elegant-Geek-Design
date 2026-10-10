@@ -21,36 +21,31 @@ EGD 是一套跨平台自适应设计系统。所有组件模块化封装，像�
 
 ## 如何使用
 
-所有设计资产（核心文档 / EGD 本体 / 自有模块）统一通过 **Releases** 分发，直接去下载：
+全部资产在 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**，想单下哪个文件就点哪个，或者直接下完整便携包一键解压：
 
-👉 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**
+**完整便携包**：`Elegant_Geek_Design_v1.1.zip`（含全部模块 + 核心文档 + 预览，解压即用）
 
-| 资产 | 内容 |
+**文件列表**（原文件，可单独下载）：
+
+| 文件 | 说明 |
 | --- | --- |
-| `Elegant_Geek_Design_v1.1.zip` | 核心文档（中英）+ EGD 本体（核心 Tokens + 基地演示）+ README + agents |
-| `eg_color_v1.0.zip` | 色板模块（签名绿） |
-| `eg_floating_nav_v1.1.zip` | 悬浮液态玻璃导航栏模块 |
+| `EGD_v1.1.dart` | 设计系统核心 Tokens（颜色 / 玻璃 / 间距 / 文字） |
+| `eg_color_v1.0.dart` | 色板模块（签名绿） |
+| `eg_floating_nav_v1.1.dart` | 悬浮液态玻璃导航栏模块 |
+| `Elegant_Geek_Design.md` | 统筹文档（中文核心） |
+| `Elegant_Geek_Design_en.md` | 统筹文档（英文版） |
+| `eg_*_demo.html` | 各模块中英文预览（浏览器直接打开） |
 
-下载解压后拷入你的 Flutter 工程，`import` 对应 `.dart` 即用（拼装玩具式）。AI 使用请阅读 **[agents.md](agents.md)**。
+解压 / 下载后拷入 Flutter 工程，`import` 对应 `.dart` 即用。
 
-## 快速开始
+**第三方附加**（按需自行下载）：
 
-```dart
-// 引用 EGD 设计系统核心 Tokens
-import 'EGD_v1.1/EGD_v1.1.dart';
-EGDColor.accent;   // #00C48C
-EGDGlass.blur;     // 6
+| 附加 | 用途 | 官方链接 |
+| --- | --- | --- |
+| 霞鹜文楷 LXGW WenKai | 设计字体 | https://github.com/lxgw/LxgwWenKai |
+| Lucide Icons | 图标库 | https://lucide.dev |
 
-// 悬浮液态玻璃导航栏（拼装即用）
-import 'floating_nav_v1.1/eg_floating_nav_v1.1.dart';
-EGDFloatingNav(tabs: [
-  EGDTab(icon: Icon(Icons.grid), label: '示例', page: Page1()),
-]);
-```
-
-## 仓库内容
-
-本仓库仅含项目门面文档：`README.md` / `README_en.md` / `agents.md`。所有设计资产（核心文档、EGD 本体、自有模块、第三方快照）均通过 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)** 分发，仓库内不直接存放。
+AI 智能体使用说明见 [agents.md](agents.md)。
 
 ## 设计约束（铁律）
 
@@ -58,12 +53,3 @@ EGDFloatingNav(tabs: [
 - 液态玻璃为默认容器材质，能玻璃化的都玻璃化
 - 禁 emoji 图标；图标一律 SVG（Lucide 风格）
 - 对比度：正文 ≥ 4.5:1，大字 ≥ 3:1（WCAG 2.2 AA）
-
-## 第三方资源声明
-
-| 资源 | 名称 | 许可证 | 商用 | 官方下载 |
-| --- | --- | --- | --- | --- |
-| 字体 | 霞鹜文楷 LXGW WenKai | SIL OFL 1.1 | 允许 | https://github.com/lxgw/LxgwWenKai |
-| 图标 | Lucide Icons | ISC | 允许 | https://lucide.dev |
-
-> 第三方资源（OFL 1.1 / ISC 均允许再分发）不在仓库与 Releases 内，请走官方链接自行获取。
