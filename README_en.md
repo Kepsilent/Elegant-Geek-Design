@@ -19,6 +19,20 @@ EGD is a cross-platform adaptive design system. Every component is modular and p
 3. **Icons (Lucide)**: official icon library, all SVG, emoji banned
 4. **Font (LXGW WenKai)**: the only design font, OFL 1.1, free for commercial use
 
+## How to Use
+
+**For humans**:
+
+1. **Get the project**: `git clone https://github.com/Kepsilent/Elegant-Geek-Design.git`, or download a module zip from [Releases](../../releases)
+2. **See it in action**: open the `.html` previews under each module's `demo/` in a browser (base showcase: `EGD/EGD_v1.1/demo/EGD_v1.1_demo.html`)
+3. **Use in your own project**: copy the module folder (e.g. `floating_nav/floating_nav_v1.1/`) into your Flutter project and `import` its `.dart` — plug & play:
+   - `eg_color_v1.0.dart` → palette tokens (`EGDColor.*`)
+   - `eg_floating_nav_v1.1.dart` → floating liquid-glass nav bar component
+   - `EGD_v1.1.dart` → design-system core tokens (color / glass / space / text)
+4. **Custom icons**: draw missing icons as SVG in Lucide style (`assets/icons/lucide/` has the full reference set)
+
+**For AI (models / agents)**: please read **[agents.md](agents.md)** first — it contains acquisition methods, module inventory, import paths, iron rules and version conventions, so AI can operate this design system correctly.
+
 ## Quick Start
 
 ```dart
@@ -66,7 +80,9 @@ Elegant Geek Design/
 
 ## Third-Party Notice
 
-| Asset | Name | License | Commercial |
-| --- | --- | --- | --- |
-| Font | LXGW WenKai | SIL OFL 1.1 | Allowed |
-| Icons | Lucide | ISC | Allowed |
+| Asset | Name | License | Commercial | Official Download |
+| --- | --- | --- | --- | --- |
+| Font | LXGW WenKai | SIL OFL 1.1 | Allowed | https://github.com/lxgw/LxgwWenKai |
+| Icons | Lucide | ISC | Allowed | https://lucide.dev |
+
+> The `assets/` folder in this repo carries snapshots of both with license texts (OFL 1.1 / ISC both permit redistribution). Releases publish only our own content (EGD core docs and first-party modules); third-party assets go through official links.
