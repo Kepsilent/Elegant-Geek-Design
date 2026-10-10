@@ -2,6 +2,14 @@
 .mimosa/
 .zcode/
 
+# 设计资产（统一通过 Releases 分发，仓库内不存放）
+EGD/
+modules/
+assets/
+Elegant_Geek_Design.md
+Elegant_Geek_Design_en.md
+Elegant_Geek_Design_changelog.json
+
 # 系统 / 编辑器
 .DS_Store
 Thumbs.db

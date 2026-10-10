@@ -10,7 +10,7 @@
 
 ## What It Is
 
-EGD is a cross-platform adaptive design system. Every component is modular and plug-and-play; this repo is both the design spec and a directly importable code base.
+EGD is a cross-platform adaptive design system. Every component is modular and plug-and-play, all distributed via Releases.
 
 **Four Pillars**:
 
@@ -21,55 +21,36 @@ EGD is a cross-platform adaptive design system. Every component is modular and p
 
 ## How to Use
 
-**For humans**:
+All design assets (core docs / EGD core / first-party modules) are distributed via **Releases** — download them there:
 
-1. **Get the project**: `git clone https://github.com/Kepsilent/Elegant-Geek-Design.git`, or download a module zip from [Releases](../../releases)
-2. **See it in action**: open the `.html` previews under each module's `demo/` in a browser (base showcase: `EGD/EGD_v1.1/demo/EGD_v1.1_demo.html`)
-3. **Use in your own project**: copy the module folder (e.g. `floating_nav/floating_nav_v1.1/`) into your Flutter project and `import` its `.dart` — plug & play:
-   - `eg_color_v1.0.dart` → palette tokens (`EGDColor.*`)
-   - `eg_floating_nav_v1.1.dart` → floating liquid-glass nav bar component
-   - `EGD_v1.1.dart` → design-system core tokens (color / glass / space / text)
-4. **Custom icons**: draw missing icons as SVG in Lucide style (`assets/icons/lucide/` has the full reference set)
+👉 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**
 
-**For AI (models / agents)**: please read **[agents.md](agents.md)** first — it contains acquisition methods, module inventory, import paths, iron rules and version conventions, so AI can operate this design system correctly.
+| Asset | Contains |
+| --- | --- |
+| `Elegant_Geek_Design_v1.1.zip` | Core docs (ZH/EN) + EGD core (tokens + base showcase) + README + agents |
+| `eg_color_v1.0.zip` | Palette module (signature green) |
+| `eg_floating_nav_v1.1.zip` | Floating liquid-glass nav bar module |
+
+Unzip, copy into your Flutter project, `import` the corresponding `.dart` — plug & play. For AI use, please read **[agents.md](agents.md)**.
 
 ## Quick Start
 
 ```dart
 // Import EGD design-system core tokens
-import 'EGD/EGD_v1.1/EGD_v1.1.dart';
+import 'EGD_v1.1/EGD_v1.1.dart';
 EGDColor.accent;   // #00C48C
 EGDGlass.blur;     // 6
 
 // Floating liquid-glass nav bar (plug & play)
+import 'floating_nav_v1.1/eg_floating_nav_v1.1.dart';
 EGDFloatingNav(tabs: [
   EGDTab(icon: Icon(Icons.grid), label: 'Example', page: Page1()),
 ]);
 ```
 
-## Structure
+## Repo Contents
 
-```
-Elegant Geek Design/
-├── Elegant_Geek_Design.md        ← Core doc (Chinese)
-├── Elegant_Geek_Design_en.md     ← Core doc (English)
-├── README.md / README_en.md      ← This file (Chinese) / English
-├── EGD/EGD_v1.1/                 ← Design-system core tokens + showcase demo
-├── modules/
-│   ├── color/color_v1.0/         ← Palette module
-│   └── floating_nav/floating_nav_v1.1/ ← Floating nav module
-└── assets/
-    ├── fonts/lxgw-wenkai/        ← LXGW WenKai (OFL 1.1)
-    └── icons/lucide/             ← Lucide (ISC)
-```
-
-## Module Index
-
-| Module | Latest | ZH Preview | EN Preview |
-| --- | --- | --- | --- |
-| EGD Core | v1.1 "Design System Core" | `EGD/EGD_v1.1/demo/EGD_v1.1_demo.html` | `EGD_v1.1_demo_en.html` |
-| color | v1.0 "Signature Green" | `modules/color/color_v1.0/demo/eg_color_v1.0_demo.html` | `..._demo_en.html` |
-| floating_nav | v1.1 "Squircle Centered" | `modules/floating_nav/floating_nav_v1.1/demo/eg_floating_nav_v1.1_demo.html` | `..._demo_en.html` |
+This repo only carries the project front-door docs: `README.md` / `README_en.md` / `agents.md`. All design assets (core docs, EGD core, first-party modules, third-party snapshots) are distributed via **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)** — nothing is stored directly in the repo.
 
 ## Iron Rules
 
@@ -85,4 +66,4 @@ Elegant Geek Design/
 | Font | LXGW WenKai | SIL OFL 1.1 | Allowed | https://github.com/lxgw/LxgwWenKai |
 | Icons | Lucide | ISC | Allowed | https://lucide.dev |
 
-> The `assets/` folder in this repo carries snapshots of both with license texts (OFL 1.1 / ISC both permit redistribution). Releases publish only our own content (EGD core docs and first-party modules); third-party assets go through official links.
+> Third-party assets (OFL 1.1 / ISC, both permit redistribution) are not in the repo or Releases — get them from the official links.
