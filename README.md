@@ -10,7 +10,7 @@
 
 ## 它是什么
 
-EGD 是一套跨平台自适应设计系统。所有组件模块化封装，像拼装玩具一样即插即用，全部通过 Release 分发。
+EGD 是一套跨平台自适应设计系统：一套设计规范 + 可预览的组件 demo，全部通过 Release 分发。
 
 **四大支柱**：
 
@@ -21,22 +21,10 @@ EGD 是一套跨平台自适应设计系统。所有组件模块化封装，像�
 
 ## 如何使用
 
-全部资产在 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**，想单下哪个文件就点哪个，或者直接下完整便携包一键解压：
+全部资产在 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**：
 
-**完整便携包**：`Elegant_Geek_Design_v1.1.zip`（含全部模块 + 核心文档 + 预览，解压即用）
-
-**文件列表**（原文件，可单独下载）：
-
-| 文件 | 说明 |
-| --- | --- |
-| `EGD_v1.1.dart` | 设计系统核心 Tokens（颜色 / 玻璃 / 间距 / 文字） |
-| `eg_color_v1.0.dart` | 色板模块（签名绿） |
-| `eg_floating_nav_v1.1.dart` | 悬浮液态玻璃导航栏模块 |
-| `Elegant_Geek_Design.md` | 统筹文档（中文核心） |
-| `Elegant_Geek_Design_en.md` | 统筹文档（英文版） |
-| `eg_*_demo.html` | 各模块中英文预览（浏览器直接打开） |
-
-解压 / 下载后拷入 Flutter 工程，`import` 对应 `.dart` 即用。
+- **完整便携包**：`Elegant_Geek_Design_v1.1.zip`，一键解压，含核心文档 + EGD demo + 各组件 demo
+- **单独下载**：核心文档 `Elegant_Geek_Design_v1.1.md`（中英）、EGD demo、组件 demo（`*.html` 浏览器打开即可预览效果）
 
 **第三方附加**（按需自行下载）：
 
@@ -45,7 +33,7 @@ EGD 是一套跨平台自适应设计系统。所有组件模块化封装，像�
 | 霞鹜文楷 LXGW WenKai | 设计字体 | https://github.com/lxgw/LxgwWenKai |
 | Lucide Icons | 图标库 | https://lucide.dev |
 
-AI 智能体使用说明见 [agents.md](agents.md)。
+AI 智能体使用说明见 [agents.md](agents.md)；发布规范见 [GitHub_Release.md](GitHub_Release.md)。
 
 ## 设计约束（铁律）
 

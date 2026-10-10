@@ -10,7 +10,7 @@
 
 ## What It Is
 
-EGD is a cross-platform adaptive design system. Every component is modular and plug-and-play, all distributed via Release.
+EGD is a cross-platform adaptive design system: a design spec plus previewable component demos, all distributed via Releases.
 
 **Four Pillars**:
 
@@ -21,22 +21,10 @@ EGD is a cross-platform adaptive design system. Every component is modular and p
 
 ## How to Use
 
-Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)** — download any file directly, or grab the full portable zip and unzip once:
+Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**:
 
-**Portable bundle**: `Elegant_Geek_Design_v1.1.zip` (all modules + core docs + previews, ready to use)
-
-**File list** (raw files, downloadable individually):
-
-| File | What it is |
-| --- | --- |
-| `EGD_v1.1.dart` | Design-system core tokens (color / glass / space / text) |
-| `eg_color_v1.0.dart` | Palette module (signature green) |
-| `eg_floating_nav_v1.1.dart` | Floating liquid-glass nav bar module |
-| `Elegant_Geek_Design.md` | Orchestration doc (Chinese core) |
-| `Elegant_Geek_Design_en.md` | Orchestration doc (English) |
-| `eg_*_demo.html` | Per-module ZH/EN previews (open in a browser) |
-
-Unzip / download, copy into your Flutter project, `import` the corresponding `.dart` — plug & play.
+- **Portable bundle**: `Elegant_Geek_Design_v1.1.zip` — unzip once: core docs + EGD demo + per-module demos
+- **Individual files**: core docs `Elegant_Geek_Design_v1.1.md` (ZH/EN), EGD demo, module demos (`*.html`, open in a browser to preview)
 
 **Third-party add-ons** (grab as needed):
 
@@ -45,7 +33,7 @@ Unzip / download, copy into your Flutter project, `import` the corresponding `.d
 | LXGW WenKai | Design font | https://github.com/lxgw/LxgwWenKai |
 | Lucide Icons | Icon library | https://lucide.dev |
 
-For AI agents, see [agents.md](agents.md).
+For AI agents, see [agents.md](agents.md); release conventions: [GitHub_Release.md](GitHub_Release.md).
 
 ## Iron Rules
 
