@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD FloatingNav v1.1</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700;
+  font-display: swap;
+}
+
+:root {
+  --bg: #FFFFFF;
+  --text: #1D1D1F;
+  --text-2: #6E6E73;
+  --text-3: #AEAEB2;
+  --accent: #00C48C;
+  --accent-text: #007A55;
+  --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --separator: rgba(0,0,0,0.08);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wrap { max-width: 420px; margin: 0 auto; padding: 24px 20px 120px; }
+
+/* ========== CHANGELOG (embedded EN section of changelog.md) ========== */
+.changelog {
+  border-radius: 18px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  padding: 16px 20px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.changelog::before {
+  content: ''; position: absolute; top: 0; left: 10px; right: 10px; height: 40%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
+  pointer-events: none;
+}
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-entry { padding: 10px 0; border-bottom: 0.5px solid var(--separator); }
+.cl-entry:last-child { border-bottom: none; }
+.cl-ver { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag {
+  font-size: 11px; font-weight: 600; color: var(--accent-text);
+  background: var(--accent-glass); border: 0.5px solid var(--accent-border);
+  border-radius: 999px; padding: 1px 8px;
+}
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before {
+  content: ''; position: absolute; left: 1px; top: 9px;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+}
+
+/* ========== Sample pages ========== */
+.pages { position: relative; }
+.page { display: none; }
+.page.active { display: block; }
+.page-name { font-size: 22px; font-weight: 700; margin-top: 8px; }
+.page-name .accent { color: var(--accent-text); }
+.page-demo {
+  width: 200px; margin: 28px auto 0;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  padding: 20px;
+  font-size: 14px; color: var(--text-2);
+}
+
+/* ========== Floating glass nav bar ========== */
+.float-nav {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 7px;
+  border-radius: 24px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+.float-nav::before {
+  content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent);
+  border-radius: 24px 24px 0 0;
+  pointer-events: none;
+}
+
+.nav-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 70px;
+  cursor: grab;
+}
+.nav-wrap.dragging { cursor: grabbing; }
+
+.nav-item {
+  position: relative;
+  z-index: 2;
+  width: 56px; height: 56px;
+  border: none; background: transparent;
+  border-radius: 16px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px;
+  color: var(--text-3);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 10px;
+  transition: color 200ms cubic-bezier(0.4,0,0.2,1);
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-item svg { width: 20px; height: 20px; }
+.nav-item.active { color: var(--accent-text); }
+
+/* Selected indicator: squircle (radius 18px) + strictly centered (left:0 aligns tab origin) */
+.nav-pill {
+  position: absolute;
+  left: 0; top: 7px;
+  width: 56px; height: 56px;
+  border-radius: 18px;
+  background: var(--accent-glass);
+  border: 0.5px solid var(--accent-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 2px 8px rgba(0,0,0,0.06);
+  z-index: 1;
+  pointer-events: none;
+}
+.nav-wrap.dragging .nav-pill {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 0 12px rgba(0,0,0,0.10),
+    0 4px 16px rgba(0,0,0,0.12);
+}
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <!-- CHANGELOG: embedded EN section of eg_floating_nav_v1.1_changelog.md -->
+  <section class="changelog">
+    <div class="cl-title">CHANGELOG</div>
+    <div class="cl-entry">
+      <div class="cl-ver">v1.1 <span class="tag">Squircle Centered</span><span class="cl-date">2026-10-10</span></div>
+      <ul class="cl-list">
+        <li>Fixed: indicator changed from circle to squircle (rounded rect, radius 18px)</li>
+        <li>Fixed: indicator strictly centered, aligns with tab center when idle</li>
+        <li>Fixed: drag offset — indicator center follows finger exactly</li>
+        <li>Added: 4 sample tabs (Example 1–4)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sample pages: one page per tab -->
+  <div class="pages">
+    <section class="page active" id="page-0">
+      <div class="page-name">Example <span class="accent">1</span></div>
+      <div class="page-demo">Example 1</div>
+    </section>
+    <section class="page" id="page-1">
+      <div class="page-name">Example <span class="accent">2</span></div>
+      <div class="page-demo">Example 2</div>
+    </section>
+    <section class="page" id="page-2">
+      <div class="page-name">Example <span class="accent">3</span></div>
+      <div class="page-demo">Example 3</div>
+    </section>
+    <section class="page" id="page-3">
+      <div class="page-name">Example <span class="accent">4</span></div>
+      <div class="page-demo">Example 4</div>
+    </section>
+  </div>
+</main>
+
+<!-- Floating glass nav bar: four examples -->
+<nav class="float-nav" aria-label="Primary">
+  <div class="nav-wrap" id="navWrap">
+    <div class="nav-pill" id="navPill"></div>
+
+    <button class="nav-item active" data-index="0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+      <span>Example</span>
+    </button>
+    <button class="nav-item" data-index="1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
+      <span>Example</span>
+    </button>
+    <button class="nav-item" data-index="2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+      <span>Example</span>
+    </button>
+    <button class="nav-item" data-index="3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3 8 9l4 13 4-13-2.5-6"/><path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"/><path d="M2 9h20"/></svg>
+      <span>Example</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+(function () {
+  'use strict';
+
+  var wrap = document.getElementById('navWrap');
+  var pill = document.getElementById('navPill');
+  var items = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+
+  var SLOT = 60;          // 56(item) + 4(gap)
+  var PRESS = 1.15;       // scale up while dragging
+  var MOVE_TOL = 5;       // drag threshold (below = tap)
+  var dragging = false;
+  var moved = false;
+  var downX = 0, downY = 0;
+  var grabDX = 0;         // finger offset from pill center
+  var pillX = 0;
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  function select(i, animate) {
+    if (i < 0 || i >= items.length) return;
+    pillX = i * SLOT;
+    items.forEach(function (el, k) { el.classList.toggle('active', k === i); });
+    pages.forEach(function (p, k) { p.classList.toggle('active', k === i); });
+    if (animate) {
+      pill.style.transition = 'transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+      pill.style.transform = 'translateX(' + pillX + 'px)';
+      setTimeout(function () { pill.style.transition = ''; }, 540);
+    } else {
+      pill.style.transition = 'none';
+      pill.style.transform = 'translateX(' + pillX + 'px)';
+    }
+  }
+
+  /* Press anywhere on the bar to drag; movement under threshold = tap */
+  wrap.addEventListener('pointerdown', function (e) {
+    dragging = true;
+    moved = false;
+    downX = e.clientX; downY = e.clientY;
+    var wr = wrap.getBoundingClientRect();
+    var pr = pill.getBoundingClientRect();
+    var pillCenter = (pr.left - wr.left) + pr.width / 2;
+    grabDX = (e.clientX - wr.left) - pillCenter;
+    try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
+    pill.style.transition = 'none';
+    pill.style.transform = 'translateX(' + pillX + 'px) scale(' + PRESS + ')';
+    wrap.classList.add('dragging');
+  });
+
+  wrap.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    if (!moved && (Math.abs(e.clientX - downX) > MOVE_TOL || Math.abs(e.clientY - downY) > MOVE_TOL)) {
+      moved = true;
+    }
+    if (!moved) return;
+    var wr = wrap.getBoundingClientRect();
+    var target = (e.clientX - wr.left) - grabDX - 28;  // 28 = half pill width, centered follow
+    var max = (items.length - 1) * SLOT;
+    if (target < 0) target *= 0.25;                   // soft rubber band at edges
+    if (target > max) target = max + (target - max) * 0.25;
+    pillX = target;
+    pill.style.transform = 'translateX(' + target + 'px) scale(' + PRESS + ')';
+    var idx = clamp(Math.round(target / SLOT), 0, items.length - 1);
+    items.forEach(function (el, k) { el.classList.toggle('active', k === idx); });
+  });
+
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false;
+    wrap.classList.remove('dragging');
+    if (!moved) {
+      /* Tap: hit-test the tab under the finger */
+      var wr = wrap.getBoundingClientRect();
+      var x = e.clientX - wr.left;
+      var idx = clamp(Math.floor(x / SLOT), 0, items.length - 1);
+      select(idx, true);
+    } else {
+      /* Drag: snap to nearest tab */
+      var idx2 = clamp(Math.round(pillX / SLOT), 0, items.length - 1);
+      select(idx2, true);
+    }
+  }
+  wrap.addEventListener('pointerup', endDrag);
+  wrap.addEventListener('pointercancel', endDrag);
+
+  select(0, false);
+})();
+</script>
+</body>
+</html>

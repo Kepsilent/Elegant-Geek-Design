@@ -1,0 +1,10 @@
+# 本地工具目录（勿上传）
+.mimosa/
+.zcode/
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
