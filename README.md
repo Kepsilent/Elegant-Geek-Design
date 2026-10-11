@@ -23,8 +23,11 @@ EGD 是一套跨平台自适应设计系统：一套设计规范 + 可预览的�
 
 全部资产在 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**：
 
-- **完整便携包**：`Elegant_Geek_Design_v1.1.zip`，一键解压，含核心文档 + EGD demo + 各组件 demo
-- **单独下载**：核心文档 `Elegant_Geek_Design_v1.1.md`（中英）、EGD demo、组件 demo（`*.html` 浏览器打开即可预览，页面内中/英切换）
+- **完整便携包**：`Elegant_Geek_Design_v1.1.zip`，一键解压，含核心文档 + 核心文件（组件）+ 全部 demo 预览
+- **单独下载**：
+  - 核心文件（组件）：`eg_color_v1.0.dart`、`eg_floating_nav_v1.1.dart`，可用对应 demo 预览效果
+  - demo 预览：`EGD_v1.1_demo.html`、`eg_*_demo.html`（浏览器打开即可预览，页面内中/英切换）
+  - 核心文档（设计规范）：`Elegant_Geek_Design_v1.1.md`（中英）
 
 **第三方附加**（按需自行下载）：
 

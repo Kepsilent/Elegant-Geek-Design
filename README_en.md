@@ -23,8 +23,11 @@ EGD is a cross-platform adaptive design system: a design spec plus previewable c
 
 Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**:
 
-- **Portable bundle**: `Elegant_Geek_Design_v1.1.zip` — unzip once: core docs + EGD demo + per-module demos
-- **Individual files**: core docs `Elegant_Geek_Design_v1.1.md` (ZH/EN), EGD demo, module demos (`*.html`, open in a browser; in-page ZH/EN switch)
+- **Portable bundle**: `Elegant_Geek_Design_v1.1.zip` — unzip once: core docs + core files (modules) + all demo previews
+- **Individual files**:
+  - Core files (modules): `eg_color_v1.0.dart`, `eg_floating_nav_v1.1.dart` — preview each via its demo
+  - Demo previews: `EGD_v1.1_demo.html`, `eg_*_demo.html` (open in a browser; in-page ZH/EN switch)
+  - Core docs (design spec): `Elegant_Geek_Design_v1.1.md` (ZH/EN)
 
 **Third-party add-ons** (grab as needed):
 
