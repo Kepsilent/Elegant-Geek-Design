@@ -24,7 +24,7 @@ EGD 是一套跨平台自适应设计系统：一套设计规范 + 可预览的�
 全部资产在 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**：
 
 - **完整便携包**：`Elegant_Geek_Design_v1.1.zip`，一键解压，含核心文档 + EGD demo + 各组件 demo
-- **单独下载**：核心文档 `Elegant_Geek_Design_v1.1.md`（中英）、EGD demo、组件 demo（`*.html` 浏览器打开即可预览效果）
+- **单独下载**：核心文档 `Elegant_Geek_Design_v1.1.md`（中英）、EGD demo、组件 demo（`*.html` 浏览器打开即可预览，页面内中/英切换）
 
 **第三方附加**（按需自行下载）：
 
@@ -33,7 +33,7 @@ EGD 是一套跨平台自适应设计系统：一套设计规范 + 可预览的�
 | 霞鹜文楷 LXGW WenKai | 设计字体 | https://github.com/lxgw/LxgwWenKai |
 | Lucide Icons | 图标库 | https://lucide.dev |
 
-AI 智能体使用说明见 [agents.md](agents.md)；发布规范见 [GitHub_Release.md](GitHub_Release.md)。
+AI 智能体使用说明见 [agents.md](agents.md)；发布规范见 [GitHub Wiki](https://github.com/Kepsilent/Elegant-Geek-Design/wiki)。
 
 ## 设计约束（铁律）
 

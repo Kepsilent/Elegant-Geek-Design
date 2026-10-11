@@ -24,7 +24,7 @@ EGD is a cross-platform adaptive design system: a design spec plus previewable c
 Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**:
 
 - **Portable bundle**: `Elegant_Geek_Design_v1.1.zip` — unzip once: core docs + EGD demo + per-module demos
-- **Individual files**: core docs `Elegant_Geek_Design_v1.1.md` (ZH/EN), EGD demo, module demos (`*.html`, open in a browser to preview)
+- **Individual files**: core docs `Elegant_Geek_Design_v1.1.md` (ZH/EN), EGD demo, module demos (`*.html`, open in a browser; in-page ZH/EN switch)
 
 **Third-party add-ons** (grab as needed):
 
@@ -33,7 +33,7 @@ Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Desig
 | LXGW WenKai | Design font | https://github.com/lxgw/LxgwWenKai |
 | Lucide Icons | Icon library | https://lucide.dev |
 
-For AI agents, see [agents.md](agents.md); release conventions: [GitHub_Release.md](GitHub_Release.md).
+For AI agents, see [agents.md](agents.md); release conventions: [GitHub Wiki](https://github.com/Kepsilent/Elegant-Geek-Design/wiki).
 
 ## Iron Rules
 

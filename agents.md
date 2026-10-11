@@ -9,7 +9,7 @@
 全部资产在 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**：
 
 - **完整便携包**：`Elegant_Geek_Design_v1.1.zip`（一键解压：核心文档 + EGD demo + 各组件 demo）
-- **单独下载**：核心文档 `Elegant_Geek_Design_v1.1.md`（中英）、`EGD_v1.1_demo.html`、各组件 `eg_*_demo.html`
+- **单独下载**：核心文档 `Elegant_Geek_Design_v1.1.md`（中英）、`EGD_v1.1_demo.html`、各组件 `eg_*_demo.html`（单文件，页面内中/英切换）
 
 ## 2. 使用方式
 
@@ -29,10 +29,10 @@
 ## 4. 版本与发布约定
 
 - 版本命名：`v<主>.<次>「命名」`（如 v1.1「设计系统本体」）
-- 每版本三件套（本地归档）：核心 `.dart` + 双语 `_changelog.md`（中文上 / 英文下）+ `demo/`（中英两份 HTML）
+- 每版本三件套（本地归档）：核心 `.dart` + 双 changelog（`_changelog_zh.md` / `_changelog_en.md`，版本号同步提升）+ `demo/`（单 HTML，中英切换）
 - 旧版本直接删除，历史条目并入最新版 changelog
 - **发布物**：核心文档（md）+ 各组件 demo（html）+ 完整便携包；changelog 与 EGD 本体 `.dart` 不发布
-- 完整发布规范见 [GitHub_Release.md](GitHub_Release.md)
+- 完整发布规范见 [GitHub Wiki](https://github.com/Kepsilent/Elegant-Geek-Design/wiki)
 
 ## 5. 第三方附加
 
@@ -52,7 +52,7 @@
 Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**:
 
 - **Portable bundle**: `Elegant_Geek_Design_v1.1.zip` (unzip once: core docs + EGD demo + per-module demos)
-- **Individual files**: core docs `Elegant_Geek_Design_v1.1.md` (ZH/EN), `EGD_v1.1_demo.html`, per-module `eg_*_demo.html`
+- **Individual files**: core docs `Elegant_Geek_Design_v1.1.md` (ZH/EN), `EGD_v1.1_demo.html`, per-module `eg_*_demo.html` (single file, in-page ZH/EN switch)
 
 ## 2. How to Use
 
@@ -72,10 +72,10 @@ Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Desig
 ## 4. Versioning & Release Conventions
 
 - Version name: `v<major>.<minor>「name」` (e.g. v1.1 "Design System Core")
-- Each version archives locally: core `.dart` + bilingual `_changelog.md` (ZH top / EN bottom) + `demo/` (ZH & EN HTML)
+- Each version archives locally: core `.dart` + dual changelogs (`_changelog_zh.md` / `_changelog_en.md`, version bumps in sync) + `demo/` (single HTML, ZH/EN switch)
 - Old versions: delete, merge history into the latest changelog
 - **Release content**: core docs (md) + per-module demos (html) + portable bundle; changelog and EGD core `.dart` are not released
-- Full release conventions: [GitHub_Release.md](GitHub_Release.md)
+- Full release conventions: [GitHub Wiki](https://github.com/Kepsilent/Elegant-Geek-Design/wiki)
 
 ## 5. Third-Party Add-ons
 
