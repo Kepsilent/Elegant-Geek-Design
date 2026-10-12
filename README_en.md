@@ -19,6 +19,8 @@ EGD is a cross-platform adaptive design system: a design spec plus previewable c
 3. **Icons (Lucide)**: official icon library, all SVG, emoji banned
 4. **Font (LXGW WenKai)**: the only design font, OFL 1.1, free for commercial use
 
+For AI agents, see [agents.md](agents.md).
+
 ## How to Use
 
 Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**:
@@ -35,8 +37,6 @@ Everything lives in **[Releases](https://github.com/Kepsilent/Elegant-Geek-Desig
 | --- | --- | --- |
 | LXGW WenKai | Design font | https://github.com/lxgw/LxgwWenKai |
 | Lucide Icons | Icon library | https://lucide.dev |
-
-For AI agents, see [agents.md](agents.md); release conventions: [GitHub Wiki](https://github.com/Kepsilent/Elegant-Geek-Design/wiki).
 
 ## Iron Rules
 
