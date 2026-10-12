@@ -19,9 +19,9 @@ EGD 是一套跨平台自适应设计系统：一套设计规范 + 可预览的�
 3. **图标 Lucide**：官方图标库，全部 SVG 实现，禁 emoji
 4. **字体 霞鹜文楷**：全层级唯一设计字体，OFL 1.1 可商用
 
-AI 智能体使用说明见 [agents.md](agents.md)。
-
 ## 如何使用
+
+**AI 智能体使用说明见 [agents.md](agents.md)。**
 
 全部资产在 **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)**：
 
