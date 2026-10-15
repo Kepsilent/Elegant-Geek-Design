@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD Toggle v1.0</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700; font-display: swap;
+}
+:root {
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 520px; margin: 0 auto; padding: 24px 20px 60px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
+.tip { font-size: 12.5px; color: var(--text-3); margin-bottom: 14px; }
+/* 被开关控制的内容 */
+.controlled {
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px; border-radius: 24px;
+  background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  position: relative; overflow: hidden;
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+.controlled.off { opacity: 0.25; transform: scale(0.97); }
+.controlled::before { content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent); pointer-events: none; }
+.ctrl-icon { width: 44px; height: 44px; border-radius: 14px; background: var(--accent-glass); border: 0.5px solid var(--accent-border); display: flex; align-items: center; justify-content: center; color: var(--accent-text); flex-shrink: 0; }
+.ctrl-icon svg { width: 22px; height: 22px; }
+.ctrl-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.ctrl-body p { font-size: 12.5px; color: var(--text-2); }
+/* 开关行 */
+.switch-row { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding: 14px 18px; border-radius: 18px; background: #F5F5F7; border: 0.5px solid #E5E5EA; }
+.switch-row .sr-label { font-size: 13px; font-weight: 600; color: var(--text-2); }
+.switch-row .sr-label b { color: var(--text); }
+.switch { position: relative; width: 52px; height: 30px; border-radius: 999px; background: rgba(0,0,0,0.15); transition: background 200ms ease; cursor: pointer; flex-shrink: 0; }
+.switch.on { background: var(--accent); }
+.switch .knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: left 200ms ease; }
+.switch.on .knob { left: 25px; }
+.zero-tip { margin-top: 12px; font-size: 12px; color: var(--text-3); }
+.status { margin-top: 16px; text-align: center; font-size: 13px; color: var(--text-2); }
+.status b { color: var(--accent-text); font-weight: 700; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-ver" id="clVer"></div>
+    <ul class="cl-list" id="clList"></ul>
+  </section>
+
+  <div class="sec-title" id="secTitle">功能开关 · 控制任意功能启用/禁用</div>
+  <div class="tip" id="secTip">拨动开关：开启 = 被控内容显示（正常渲染）；关闭 = 被控内容不渲染（零资源开销）。</div>
+  <div class="controlled" id="controlled">
+    <div class="ctrl-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
+    </div>
+    <div class="ctrl-body">
+      <h4 id="cTitle">被控功能：液态玻璃</h4>
+      <p id="cDesc">开关状态由 ValueNotifier 持有，运行期可随时切换</p>
+    </div>
+  </div>
+  <div class="switch-row">
+    <span class="sr-label" id="srLabel">功能开关：<b id="srState">已启用</b></span>
+    <div class="switch on" id="switch"></div>
+  </div>
+  <div class="zero-tip" id="zeroTip">关闭时被控内容直接移出渲染树 → 零资源开销</div>
+  <div class="status" id="status">开关状态：<b id="statusState">ON</b></div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0 <span class="tag">开关独立</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['功能开关原子件：ValueNotifier 运行期开关', '关闭 = 被控内容不渲染（零开销），可带可视化开关按钮'],
+      secTitle: '功能开关 · 控制任意功能启用/禁用',
+      secTip: '拨动开关：开启 = 被控内容显示（正常渲染）；关闭 = 被控内容不渲染（零资源开销）。',
+      cTitle: '被控功能：液态玻璃', cDesc: '开关状态由 ValueNotifier 持有，运行期可随时切换',
+      srLabel: '功能开关：', on: '已启用', off: '已禁用',
+      zeroTip: '关闭时被控内容直接移出渲染树 → 零资源开销', state: '开关状态：', ON: 'ON', OFF: 'OFF'
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0 <span class="tag">Switch Standalone</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['Feature-toggle atom: runtime ValueNotifier switch', 'Off = controlled content not rendered (zero cost), optional visible switch UI'],
+      secTitle: 'Feature Toggle · enable/disable any feature',
+      secTip: 'Flip the switch: ON = controlled content renders; OFF = controlled content not rendered (zero cost).',
+      cTitle: 'Controlled feature: Liquid Glass', cDesc: 'State held by a ValueNotifier, switchable at runtime',
+      srLabel: 'Feature switch: ', on: 'enabled', off: 'disabled',
+      zeroTip: 'Off = controlled content removed from the render tree → zero cost', state: 'Switch state: ', ON: 'ON', OFF: 'OFF'
+    }
+  };
+  var lang = 'zh';
+  var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
+  var controlled = document.getElementById('controlled');
+  var sw = document.getElementById('switch');
+  var isOn = true;
+
+  function render() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    document.getElementById('clVer').innerHTML = d.clVer;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    document.getElementById('secTitle').textContent = d.secTitle;
+    document.getElementById('secTip').textContent = d.secTip;
+    document.getElementById('cTitle').textContent = d.cTitle;
+    document.getElementById('cDesc').textContent = d.cDesc;
+    document.getElementById('srLabel').innerHTML = d.srLabel + '<b>' + (isOn ? d.on : d.off) + '</b>';
+    document.getElementById('zeroTip').textContent = d.zeroTip;
+    document.getElementById('statusState').textContent = isOn ? d.ON : d.OFF;
+    document.getElementById('status').innerHTML = d.state + '<b>' + (isOn ? d.ON : d.OFF) + '</b>';
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+  sw.addEventListener('click', function () {
+    isOn = !isOn;
+    sw.classList.toggle('on', isOn);
+    controlled.classList.toggle('off', !isOn);
+    render();
+  });
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

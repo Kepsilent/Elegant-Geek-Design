@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD Color</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700;
+  font-display: swap;
+}
+
+:root {
+  --bg: #FFFFFF;
+  --text: #1D1D1F;
+  --text-2: #6E6E73;
+  --text-3: #AEAEB2;
+  --accent: #00C48C;
+  --accent-text: #007A55;
+  --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --separator: rgba(0,0,0,0.08);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
+
+/* 语言切换 */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-highlight);
+  margin-bottom: 20px;
+}
+.lang-toggle button {
+  border: none; background: transparent;
+  font-family: var(--font);
+  font-size: 13px; font-weight: 600;
+  color: var(--text-2);
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.lang-toggle button.active {
+  background: var(--accent-glass);
+  border: 0.5px solid var(--accent-border);
+  color: var(--accent-text);
+}
+
+/* ========== CHANGELOG（内嵌 _changelog_zh.md / _changelog_en.md 最新版本） ========== */
+.changelog {
+  border-radius: 18px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  padding: 16px 20px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.changelog::before {
+  content: ''; position: absolute; top: 0; left: 10px; right: 10px; height: 40%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
+  pointer-events: none;
+}
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-entry { padding: 10px 0; border-bottom: 0.5px solid var(--separator); }
+.cl-entry:last-child { border-bottom: none; }
+.cl-ver { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag {
+  font-size: 11px; font-weight: 600; color: var(--accent-text);
+  background: var(--accent-glass); border: 0.5px solid var(--accent-border);
+  border-radius: 999px; padding: 1px 8px;
+}
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before {
+  content: ''; position: absolute; left: 1px; top: 9px;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+}
+
+/* ========== 色板 ========== */
+.section-title { font-size: 15px; font-weight: 600; margin: 20px 0 12px; }
+.swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.swatch {
+  border-radius: 14px;
+  border: 0.5px solid var(--glass-border);
+  overflow: hidden;
+  background: var(--glass-bg);
+  box-shadow: var(--glass-highlight);
+}
+.swatch .chip { height: 64px; position: relative; }
+.swatch .chip .hex {
+  position: absolute; right: 10px; bottom: 8px;
+  font-size: 11px; font-family: monospace;
+  color: rgba(0,0,0,0.55);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+.swatch .meta { padding: 8px 12px 10px; }
+.swatch .meta .name { font-size: 13px; font-weight: 600; }
+.swatch .meta .use { font-size: 11.5px; color: var(--text-3); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <!-- 语言切换：中文 / English -->
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+
+  <!-- CHANGELOG：中文界面调用 _changelog_zh.md，英文界面调用 _changelog_en.md -->
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-entry" id="clEntry"></div>
+  </section>
+
+  <div class="section-title" id="s1">签名绿 Accent</div>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:#00C48C"><span class="hex">#00C48C</span></div><div class="meta"><div class="name">accent</div><div class="use" data-i18n="use1">品牌填充 / 选中态</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#00D494"><span class="hex">#00D494</span></div><div class="meta"><div class="name">accentDark</div><div class="use" data-i18n="use2">深色强调</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#007A55"><span class="hex">#007A55</span></div><div class="meta"><div class="name">accentText</div><div class="use" data-i18n="use3">白底文字 5.36:1</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#00855C"><span class="hex">#00855C</span></div><div class="meta"><div class="name">accentStrong</div><div class="use" data-i18n="use4">白字底衬 4.66:1</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#E6F9F1"><span class="hex">#E6F9F1</span></div><div class="meta"><div class="name">accentLight</div><div class="use" data-i18n="use5">浅绿底衬</div></div></div>
+  </div>
+
+  <div class="section-title" id="s2">中性色 Neutral</div>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:#FFFFFF; border-bottom:0.5px solid rgba(0,0,0,0.08)"><span class="hex">#FFFFFF</span></div><div class="meta"><div class="name">bgLight</div><div class="use" data-i18n="use6">浅色背景（纯白）</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#000000"><span class="hex">#000000</span></div><div class="meta"><div class="name">bgDark</div><div class="use" data-i18n="use7">深色背景（纯黑）</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#1D1D1F"><span class="hex">#1D1D1F</span></div><div class="meta"><div class="name">textPrimary</div><div class="use" data-i18n="use8">正文</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#6E6E73"><span class="hex">#6E6E73</span></div><div class="meta"><div class="name">textSecondary</div><div class="use" data-i18n="use9">次要文字</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#AEAEB2"><span class="hex">#AEAEB2</span></div><div class="meta"><div class="name">textTertiary</div><div class="use" data-i18n="use10">弱化文字</div></div></div>
+  </div>
+
+  <div class="section-title" id="s3">玻璃色 Glass</div>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:rgba(255,255,255,0.55); border-bottom:0.5px solid rgba(0,0,0,0.08)"><span class="hex">55%</span></div><div class="meta"><div class="name">glassBgLight</div><div class="use" data-i18n="use11">浅色玻璃底 rgba(255,255,255,.55)</div></div></div>
+    <div class="swatch"><div class="chip" style="background:rgba(28,28,30,0.6)"><span class="hex">60%</span></div><div class="meta"><div class="name">glassBgDark</div><div class="use" data-i18n="use12">深色玻璃底 rgba(28,28,30,.6)</div></div></div>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== 中英文案 ===== */
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0', clTag: '签名绿', clDate: '2026-10-10',
+      clItems: [
+        '新增：EGD 色板（签名绿系 / 中性色系 / 玻璃色系）',
+        '新增：浅色与深色双主题 Token',
+        '新增：对比度安全色（accentText 白底 5.36:1、accentStrong 白字底衬 4.66:1）'
+      ],
+      s1: '签名绿 Accent', s2: '中性色 Neutral', s3: '玻璃色 Glass',
+      use: [
+        '品牌填充 / 选中态', '深色强调', '白底文字 5.36:1', '白字底衬 4.66:1', '浅绿底衬',
+        '浅色背景（纯白）', '深色背景（纯黑）', '正文', '次要文字', '弱化文字',
+        '浅色玻璃底 rgba(255,255,255,.55)', '深色玻璃底 rgba(28,28,30,.6)'
+      ]
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0', clTag: 'Signature Green', clDate: '2026-10-10',
+      clItems: [
+        'Added: EGD palette (accent / neutral / glass families)',
+        'Added: light and dark dual-theme tokens',
+        'Added: contrast-safe colors (accentText 5.36:1 on white, accentStrong 4.66:1 for white text)'
+      ],
+      s1: 'Accent (Signature Green)', s2: 'Neutral', s3: 'Glass',
+      use: [
+        'Brand fill / selected state', 'Dark accent', 'Text on white 5.36:1', 'White-text backdrop 4.66:1', 'Light green backdrop',
+        'Light bg (pure white)', 'Dark bg (pure black)', 'Body text', 'Secondary text', 'Tertiary text',
+        'Light glass bg rgba(255,255,255,.55)', 'Dark glass bg rgba(28,28,30,.6)'
+      ]
+    }
+  };
+
+  var lang = 'zh';
+  var toggle = document.getElementById('langToggle');
+  var btns = Array.prototype.slice.call(toggle.querySelectorAll('button'));
+  var clEntry = document.getElementById('clEntry');
+  var useEls = Array.prototype.slice.call(document.querySelectorAll('[data-i18n]'));
+
+  function renderChangelog(d) {
+    var items = d.clItems.map(function (t) {
+      return '<li>' + t + '</li>';
+    }).join('');
+    clEntry.innerHTML =
+      '<div class="cl-ver">' + d.clVer + ' <span class="tag">' + d.clTag + '</span>' +
+      '<span class="cl-date">' + d.clDate + '</span></div>' +
+      '<ul class="cl-list">' + items + '</ul>';
+  }
+
+  function render() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    renderChangelog(d);
+    document.getElementById('s1').textContent = d.s1;
+    document.getElementById('s2').textContent = d.s2;
+    document.getElementById('s3').textContent = d.s3;
+    useEls.forEach(function (el, i) { el.textContent = d.use[i]; });
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      lang = b.getAttribute('data-lang');
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

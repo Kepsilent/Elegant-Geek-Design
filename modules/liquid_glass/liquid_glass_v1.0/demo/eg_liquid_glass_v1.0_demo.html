@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD LiquidGlass v1.0</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700; font-display: swap;
+}
+:root {
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 520px; margin: 0 auto; padding: 24px 20px 60px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
+.glass-demo { display: flex; flex-wrap: wrap; gap: 16px; }
+.g-card {
+  flex: 1; min-width: 180px; padding: 20px; border-radius: 24px;
+  background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  position: relative; overflow: hidden;
+}
+.g-card::before { content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent); border-radius: 24px 24px 0 0; pointer-events: none; }
+.g-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.g-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+.g-btn { margin-top: 12px; padding: 10px 22px; border: none; border-radius: 999px; background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); font-family: var(--font); font-weight: 600; font-size: 13px; cursor: pointer; }
+.g-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(16px); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); font-size: 12px; color: var(--text-2); margin-right: 8px; }
+.g-chip svg { width: 14px; height: 14px; }
+.plain { background: #F5F5F7; border-radius: 24px; padding: 20px; border: 0.5px solid #E5E5EA; }
+.plain h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.plain p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-ver" id="clVer"></div>
+    <ul class="cl-list" id="clList"></ul>
+  </section>
+
+  <div class="sec-title" id="sec1">液态玻璃折射 · 可贴任意控件</div>
+  <div class="glass-demo">
+    <div class="g-card">
+      <h4 id="c1t">玻璃卡片</h4>
+      <p id="c1p">blur 24 · 双峰高光 · 顶部亮边 · 圆角 24</p>
+      <button class="g-btn" id="c1b">玻璃按钮</button>
+    </div>
+    <div class="g-card">
+      <h4 id="c2t">玻璃容器</h4>
+      <p id="c2p">半透明底 · 折射边框 · 浮起阴影</p>
+      <div style="margin-top:12px;">
+        <span class="g-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span id="c2c1">玻璃胶囊</span></span>
+        <span class="g-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg><span id="c2c2">玻璃徽章</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="sec2">对照：无玻璃的普通卡片</div>
+  <div class="plain">
+    <h4 id="c3t">普通卡片</h4>
+    <p id="c3p">无模糊 · 无高光 · 无折射，实底填充</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0 <span class="tag">材质独立</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['液态玻璃折射原子件：blur 模糊 / 双峰高光 / 顶部亮边 / 折射 / 深浅双主题', '可贴任意控件：卡片 / 按钮 / 导航栏 / sheet'],
+      sec1: '液态玻璃折射 · 可贴任意控件', sec2: '对照：无玻璃的普通卡片',
+      c1t: '玻璃卡片', c1p: 'blur 24 · 双峰高光 · 顶部亮边 · 圆角 24', c1b: '玻璃按钮',
+      c2t: '玻璃容器', c2p: '半透明底 · 折射边框 · 浮起阴影', c2c1: '玻璃胶囊', c2c2: '玻璃徽章',
+      c3t: '普通卡片', c3p: '无模糊 · 无高光 · 无折射，实底填充'
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0 <span class="tag">Material Standalone</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['Liquid-glass refraction atom: blur / dual highlight / top edge / refraction / light-dark themes', 'Wraps any widget: cards / buttons / nav bars / sheets'],
+      sec1: 'Liquid Glass · wraps any widget', sec2: 'Control: plain card without glass',
+      c1t: 'Glass Card', c1p: 'blur 24 · dual highlight · top edge · radius 24', c1b: 'Glass Button',
+      c2t: 'Glass Container', c2p: 'translucent base · refraction border · floating shadow', c2c1: 'Glass Chip', c2c2: 'Glass Badge',
+      c3t: 'Plain Card', c3p: 'no blur · no highlight · no refraction, solid fill'
+    }
+  };
+  var lang = 'zh';
+  var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
+  function render() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    document.getElementById('clVer').innerHTML = d.clVer;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    document.getElementById('sec1').textContent = d.sec1;
+    document.getElementById('sec2').textContent = d.sec2;
+    document.getElementById('c1t').textContent = d.c1t;
+    document.getElementById('c1p').textContent = d.c1p;
+    document.getElementById('c1b').textContent = d.c1b;
+    document.getElementById('c2t').textContent = d.c2t;
+    document.getElementById('c2p').textContent = d.c2p;
+    document.getElementById('c2c1').textContent = d.c2c1;
+    document.getElementById('c2c2').textContent = d.c2c2;
+    document.getElementById('c3t').textContent = d.c3t;
+    document.getElementById('c3p').textContent = d.c3p;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

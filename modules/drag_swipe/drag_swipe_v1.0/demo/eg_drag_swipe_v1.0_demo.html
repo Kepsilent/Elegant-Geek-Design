@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD DragSwipe v1.0</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700; font-display: swap;
+}
+:root {
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 520px; margin: 0 auto; padding: 24px 20px 60px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
+.tip { font-size: 12.5px; color: var(--text-3); margin-bottom: 14px; }
+/* 滑动交互展示区（仿导航栏吸附位，无玻璃、无悬浮——只演示手势） */
+.swipe-stage {
+  position: relative; max-width: 340px; margin: 0 auto;
+  padding: 8px; border-radius: 18px; background: #F5F5F7; border: 0.5px solid #E5E5EA;
+  user-select: none; -webkit-user-select: none; touch-action: none;
+}
+.s-wrap { position: relative; display: flex; align-items: center; gap: 4px; height: 70px; cursor: grab; }
+.s-wrap.dragging { cursor: grabbing; }
+.s-item { position: relative; z-index: 2; width: 56px; height: 56px; border: none; background: transparent; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--text-3); font-family: var(--font); font-size: 10px; transition: color 200ms; }
+.s-item svg { width: 20px; height: 20px; }
+.s-item.active { color: var(--accent-text); }
+.s-pill { position: absolute; left: 0; top: 7px; width: 56px; height: 56px; border-radius: 18px; background: var(--accent-glass); border: 0.5px solid var(--accent-border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.06); z-index: 1; pointer-events: none; }
+.s-pill.pressed { box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 16px rgba(0,0,0,0.12); }
+.status { margin-top: 16px; text-align: center; font-size: 13px; color: var(--text-2); }
+.status b { color: var(--accent-text); font-weight: 700; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-ver" id="clVer"></div>
+    <ul class="cl-list" id="clList"></ul>
+  </section>
+
+  <div class="sec-title" id="secTitle">滑动交互 · 拖动 / 放大 / 吸附 / 点击</div>
+  <div class="tip" id="secTip">注意：此演示区无玻璃、无悬浮——本原子件只负责手势。</div>
+  <div class="swipe-stage">
+    <div class="s-wrap" id="sWrap">
+      <div class="s-pill" id="sPill"></div>
+      <button class="s-item active" data-index="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg><span class="s-label">示例</span></button>
+      <button class="s-item" data-index="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg><span class="s-label">示例</span></button>
+      <button class="s-item" data-index="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span class="s-label">示例</span></button>
+      <button class="s-item" data-index="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3 8 9l4 13 4-13-2.5-6"/><path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"/><path d="M2 9h20"/></svg><span class="s-label">示例</span></button>
+    </div>
+  </div>
+  <div class="status" id="status">选中：<b id="statusIdx">0</b> · 状态：<span id="statusState">空闲</span></div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0 <span class="tag">手势独立</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['滑动交互原子件：拖动跟手 / 拖动放大 1.15× / 松手弹性吸附 / 点击判定 / 边界橡皮筋'],
+      secTitle: '滑动交互 · 拖动 / 放大 / 吸附 / 点击', secTip: '注意：此演示区无玻璃、无悬浮——本原子件只负责手势。',
+      idle: '空闲', dragging: '拖动中', snapping: '吸附中', label: '示例',
+      sel: '选中：', state: ' · 状态：'
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0 <span class="tag">Gesture Standalone</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['Drag-swipe atom: drag-follow / press scale 1.15× / elastic snap / tap detection / boundary bounce'],
+      secTitle: 'Drag Swipe · drag / scale / snap / tap', secTip: 'Note: no glass, no floating here — this atom only handles gestures.',
+      idle: 'idle', dragging: 'dragging', snapping: 'snapping', label: 'Example',
+      sel: 'Selected: ', state: ' · State: '
+    }
+  };
+  var lang = 'zh';
+  var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
+  var labels = Array.prototype.slice.call(document.querySelectorAll('.s-label'));
+
+  var wrap = document.getElementById('sWrap');
+  var pill = document.getElementById('sPill');
+  var items = Array.prototype.slice.call(document.querySelectorAll('.s-item'));
+  var SLOT = 60, PRESS = 1.15, MOVE_TOL = 5;
+  var dragging = false, moved = false, downX = 0, downY = 0, grabDX = 0, pillX = 0;
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function renderLang() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    document.getElementById('clVer').innerHTML = d.clVer;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    document.getElementById('secTitle').textContent = d.secTitle;
+    document.getElementById('secTip').textContent = d.secTip;
+    labels.forEach(function (el) { el.textContent = d.label; });
+    refreshStatus();
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+  function select(i, animate) {
+    pillX = i * SLOT;
+    items.forEach(function (el, k) { el.classList.toggle('active', k === i); });
+    if (animate) {
+      pill.style.transition = 'transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1), scale 200ms ease';
+      pill.style.transform = 'translateX(' + pillX + 'px) scale(1)';
+      setTimeout(function () { pill.style.transition = ''; }, 560);
+    } else {
+      pill.style.transition = 'none';
+      pill.style.transform = 'translateX(' + pillX + 'px) scale(1)';
+    }
+    refreshStatus();
+  }
+  var curIdx = 0, state = 'idle';
+  function refreshStatus() {
+    var d = I18N[lang];
+    document.getElementById('statusIdx').textContent = curIdx;
+    document.getElementById('statusState').textContent =
+      state === 'dragging' ? d.dragging : (state === 'snapping' ? d.snapping : d.idle);
+    document.getElementById('status').innerHTML = d.sel + '<b>' + curIdx + '</b>' + d.state + '<span>' +
+      (state === 'dragging' ? d.dragging : (state === 'snapping' ? d.snapping : d.idle)) + '</span>';
+  }
+
+  wrap.addEventListener('pointerdown', function (e) {
+    dragging = true; moved = false; state = 'dragging';
+    downX = e.clientX; downY = e.clientY;
+    var wr = wrap.getBoundingClientRect(), pr = pill.getBoundingClientRect();
+    var pillCenter = (pr.left - wr.left) + pr.width / 2;
+    grabDX = (e.clientX - wr.left) - pillCenter;
+    try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
+    pill.style.transition = 'none';
+    pill.style.transform = 'translateX(' + pillX + 'px) scale(' + PRESS + ')';
+    wrap.classList.add('dragging');
+    pill.classList.add('pressed');
+    refreshStatus();
+  });
+  wrap.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    if (!moved && (Math.abs(e.clientX - downX) > MOVE_TOL || Math.abs(e.clientY - downY) > MOVE_TOL)) moved = true;
+    if (!moved) return;
+    var wr = wrap.getBoundingClientRect();
+    var target = (e.clientX - wr.left) - grabDX - 28;
+    var max = (items.length - 1) * SLOT;
+    if (target < 0) target *= 0.25;
+    if (target > max) target = max + (target - max) * 0.25;
+    pillX = target;
+    pill.style.transform = 'translateX(' + target + 'px) scale(' + PRESS + ')';
+    curIdx = clamp(Math.round(target / SLOT), 0, items.length - 1);
+    items.forEach(function (el, k) { el.classList.toggle('active', k === curIdx); });
+    refreshStatus();
+  });
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false; state = 'snapping';
+    wrap.classList.remove('dragging');
+    pill.classList.remove('pressed');
+    if (!moved) {
+      var wr = wrap.getBoundingClientRect();
+      curIdx = clamp(Math.floor((e.clientX - wr.left) / SLOT), 0, items.length - 1);
+      select(curIdx, true);
+    } else {
+      curIdx = clamp(Math.round(pillX / SLOT), 0, items.length - 1);
+      select(curIdx, true);
+    }
+    setTimeout(function () { state = 'idle'; refreshStatus(); }, 560);
+  }
+  wrap.addEventListener('pointerup', endDrag);
+  wrap.addEventListener('pointercancel', endDrag);
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); renderLang(); });
+  });
+  renderLang();
+  select(0, false);
+})();
+</script>
+</body>
+</html>

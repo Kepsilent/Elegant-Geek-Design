@@ -1,0 +1,53 @@
+{
+  "name": "Elegant Geek Design",
+  "abbreviation": "EGD",
+  "description": "纯白为底，玻璃为质，翠绿为魂 —— 优雅与极客的平衡。跨平台自适应设计系统。",
+  "current_version": "1.2",
+  "last_updated": "2026-10-13",
+  "versioning_policy": "语义化版本：major=破坏性变更，minor=新增功能，patch=修复",
+  "versions": [
+    {
+      "version": "1.2",
+      "date": "2026-10-13",
+      "title": "原子化重构：模块体系拆为原子控件层 + 组合控件层",
+      "breaking": false,
+      "changes": {
+        "added": [
+          "原子控件层：liquid_glass（液态玻璃折射）、drag_swipe（滑动交互）、floating_widget（悬浮控件）、scroll_hide（滚动折叠）、toggle（功能开关），全部 v1.0，各做一件事、互不依赖",
+          "组合控件层：floating_nav_bar v1.0「原子拼装」，只装配不写新逻辑，FloatingNavConfig 逐层开关（关闭 = 该层不进渲染树）",
+          "滚动折叠（内容下滑隐藏/上滑展开）与功能开关面板（悬浮/玻璃/拖动/滚动折叠可独立启用禁用）"
+        ],
+        "changed": [
+          "原 floating_nav v1.1「方圆形居中」拆解为原子件 + 组合件，能力全部承接（4 示例、方圆形指示器严格居中、跟手拖动、吸附、点击切换、橡皮筋）",
+          "模块架构升级为两级：原子件装饰器式 API（child + 专属参数），组合件链式拼装",
+          "EGD 核心文档 §2/§3/§4 全面同步为原子/组合两层结构"
+        ],
+        "removed": [
+          "旧模块 floating_nav（floating_nav_v1.1）删除，历史并入 floating_nav_bar changelog"
+        ]
+      }
+    },
+    {
+      "version": "1.1",
+      "date": "2026-10-10",
+      "title": "floating_nav 升级 v1.1「方圆形居中」：4 示例 + 方圆形指示器 + 严格居中 + 跟手修复",
+      "breaking": false,
+      "changes": {
+        "fixed": [
+          "floating_nav 选中指示器：正圆 → 方圆形（radius 18px），严格居中（与 tab 中心重合）",
+          "floating_nav 拖动跟手偏移修复（pill 半宽 28px 补偿，手指到哪指示器中心到哪）"
+        ],
+        "added": [
+          "floating_nav 新增 4 个示例 tab（示例 1–4，Lucide 图标）",
+          "主文档 §2/§4 同步 floating_nav → v1.1；本 changelog 仅保留最新版本条目",
+          "EGD 本体独立目录：EGD/EGD_v1.1/（核心 Tokens .dart + 双语 CHANGELOG + 中英 demo）",
+          "模块版本文件夹命名带前缀：modules/<模块>/<模块>_v<版本>/（如 floating_nav/floating_nav_v1.1/）",
+          "根目录新增 README.md（GitHub 门面）",
+          "基地综合演示：一页呈现 EGD 四大支柱（Color / Floating Nav / Lucide / 霞鹜文楷），中英两份",
+          "README 中英：README.md（Markdown 双语）+ README_en.md（英文，链接互跳）",
+          "核心文档英文版 Elegant_Geek_Design_en.md；核心文档顶部新增「EGD 是什么」，本体移出模块体系"
+        ]
+      }
+    }
+  ]
+}

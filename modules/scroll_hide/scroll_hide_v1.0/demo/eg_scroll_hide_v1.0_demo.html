@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD ScrollHide v1.0</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700; font-display: swap;
+}
+:root {
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 520px; margin: 0 auto; padding: 24px 20px 20px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
+.tip { font-size: 12.5px; color: var(--text-3); margin-bottom: 14px; }
+/* 滚动舞台 */
+.scroll-stage {
+  height: 340px; overflow-y: auto; border-radius: 24px;
+  background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px;
+  overscroll-behavior: contain;
+}
+.para { font-size: 14px; color: var(--text-2); line-height: 1.9; margin-bottom: 18px; }
+/* 被折叠对象：贴底部的内容条（无玻璃无悬浮，只演示折叠行为） */
+.hide-target {
+  position: sticky; bottom: 0; margin-top: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px; border-radius: 18px;
+  background: #FFFFFF; border: 2px dashed var(--accent);
+  font-size: 13px; font-weight: 700; color: var(--accent-text);
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+.hide-target.hidden { transform: translateY(160%); opacity: 0; }
+.hide-target svg { width: 18px; height: 18px; }
+.status { margin-top: 14px; text-align: center; font-size: 13px; color: var(--text-2); }
+.status b { color: var(--accent-text); font-weight: 700; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-ver" id="clVer"></div>
+    <ul class="cl-list" id="clList"></ul>
+  </section>
+
+  <div class="sec-title" id="secTitle">滚动折叠 · 下滑隐藏 / 上滑展开</div>
+  <div class="tip" id="secTip">在下方内容区上下滑动：向下滚动内容 → 底部条隐藏；向上回滚 → 底部条展开。</div>
+  <div class="scroll-stage" id="scrollStage">
+    <p class="para">极简 · 液态玻璃 · 纯白/纯黑 · 霞鹜文楷 · Lucide。</p>
+    <p class="para">EGD 是一套跨平台自适应设计系统（Flutter 优先，Android / iOS / Web / 桌面）。纯白为底、玻璃为质、翠绿为魂——优雅与极客的平衡。</p>
+    <p class="para">背景浅色纯白 #FFFFFF、夜间纯黑 #000000，不依赖彩色 / 渐变背景。液态玻璃为默认容器材质，能玻璃化的都玻璃化。</p>
+    <p class="para">文字层用霞鹜文楷（OFL 1.1 可商用）；图标层用 Lucide（ISC）+ SVG 实现；禁用 emoji、icon font、PNG 图标。</p>
+    <p class="para">对比度：正文 ≥ 4.5:1，大字 ≥ 3:1（WCAG 2.2 AA）。强调色为签名绿 #00C48C（深色 #00D494）。</p>
+    <p class="para">继续向下滚动，观察底部条隐藏；向上滚动，底部条重新出现。阈值可调、方向可控、状态可回调。</p>
+    <div class="hide-target" id="hideTarget">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      <span id="htLabel">滚动折叠目标（下滑隐藏）</span>
+    </div>
+  </div>
+  <div class="status" id="status">状态：<b id="statusState">展开</b></div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0 <span class="tag">折叠独立</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['滚动折叠原子件：上下滑动浏览内容时隐藏/展开', '方向控制（下滑隐藏）/ 阈值可调 / 状态回调'],
+      secTitle: '滚动折叠 · 下滑隐藏 / 上滑展开',
+      secTip: '在下方内容区上下滑动：向下滚动内容 → 底部条隐藏；向上回滚 → 底部条展开。',
+      htLabel: '滚动折叠目标（下滑隐藏）', shown: '展开', hidden: '已隐藏',
+      state: '状态：'
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0 <span class="tag">Collapse Standalone</span><span class="cl-date">2026-10-13</span>',
+      clItems: ['Scroll-hide atom: hide/expand while scrolling content', 'Direction control (hide on scroll down) / adjustable threshold / state callback'],
+      secTitle: 'Scroll Hide · hide on scroll down / show on scroll up',
+      secTip: 'Scroll the content area: scroll down → bar hides; scroll up → bar expands.',
+      htLabel: 'Scroll-hide target (hides on scroll down)', shown: 'shown', hidden: 'hidden',
+      state: 'State: '
+    }
+  };
+  var lang = 'zh';
+  var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
+  var stage = document.getElementById('scrollStage');
+  var target = document.getElementById('hideTarget');
+  var lastOffset = 0, accumulated = 0, isHidden = false;
+
+  stage.addEventListener('scroll', function () {
+    var now = stage.scrollTop;
+    var delta = now - lastOffset;
+    lastOffset = now;
+    if (delta < 0) {
+      accumulated = 0;
+      if (isHidden) setHidden(false);
+    } else if (delta > 0) {
+      accumulated += delta;
+      if (!isHidden && accumulated > 80) { setHidden(true); accumulated = 0; }
+    }
+  });
+  function setHidden(v) {
+    isHidden = v;
+    target.classList.toggle('hidden', v);
+    render();
+  }
+  function render() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    document.getElementById('clVer').innerHTML = d.clVer;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    document.getElementById('secTitle').textContent = d.secTitle;
+    document.getElementById('secTip').textContent = d.secTip;
+    document.getElementById('htLabel').textContent = d.htLabel;
+    document.getElementById('statusState').textContent = isHidden ? d.hidden : d.shown;
+    document.getElementById('status').innerHTML = d.state + '<b>' + (isHidden ? d.hidden : d.shown) + '</b>';
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

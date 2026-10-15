@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD FloatingNavBar v1.0</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700; font-display: swap;
+}
+:root {
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 460px; margin: 0 auto; padding: 24px 20px 140px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
+.tip { font-size: 12.5px; color: var(--text-3); margin-bottom: 14px; }
+/* 内容区（可滚动，配合滚动折叠） */
+.scroll-area { height: 300px; overflow-y: auto; border-radius: 24px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px; overscroll-behavior: contain; }
+.para { font-size: 14px; color: var(--text-2); line-height: 1.9; margin-bottom: 18px; }
+/* 页面示例切换 */
+.page-panel { margin-top: 16px; border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 18px 20px; }
+.page-panel .pn { font-size: 18px; font-weight: 700; }
+.page-panel .pn .ac { color: var(--accent-text); }
+.page-panel .pd { margin-top: 6px; font-size: 13px; color: var(--text-2); }
+/* 开关面板（组合件的功能开关：控制各原子件层启用/禁用） */
+.switch-panel { margin-top: 16px; border-radius: 18px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 8px 16px; }
+.sw-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid rgba(0,0,0,0.06); }
+.sw-row:last-child { border-bottom: none; }
+.sw-row .sw-label { font-size: 13px; font-weight: 600; color: var(--text-2); }
+.sw-row .sw-label small { font-weight: 400; color: var(--text-3); margin-left: 6px; }
+.switch { position: relative; width: 44px; height: 26px; border-radius: 999px; background: rgba(0,0,0,0.15); transition: background 200ms ease; cursor: pointer; flex-shrink: 0; }
+.switch.on { background: var(--accent); }
+.switch .knob { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: left 200ms ease; }
+.switch.on .knob { left: 21px; }
+/* 悬浮玻璃导航栏（组合件成品） */
+.float-nav {
+  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 100; padding: 7px; border-radius: 24px;
+  background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  user-select: none; -webkit-user-select: none; touch-action: none;
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+.float-nav::before { content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent); border-radius: 24px 24px 0 0; pointer-events: none; }
+.float-nav.hide { transform: translate(-50%, 180%); opacity: 0; }
+.float-nav.plain { background: #FFFFFF; box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
+.float-nav.plain::before { display: none; }
+.nav-wrap { position: relative; display: flex; align-items: center; gap: 4px; height: 70px; cursor: grab; }
+.nav-wrap.dragging { cursor: grabbing; }
+.nav-item { position: relative; z-index: 2; width: 56px; height: 56px; border: none; background: transparent; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--text-3); cursor: pointer; font-family: var(--font); font-size: 10px; transition: color 200ms cubic-bezier(0.4,0,0.2,1); -webkit-tap-highlight-color: transparent; }
+.nav-item svg { width: 20px; height: 20px; }
+.nav-item.active { color: var(--accent-text); }
+.nav-pill { position: absolute; left: 0; top: 7px; width: 56px; height: 56px; border-radius: 18px; background: var(--accent-glass); border: 0.5px solid var(--accent-border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.06); z-index: 1; pointer-events: none; }
+.nav-wrap.dragging .nav-pill { box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 16px rgba(0,0,0,0.12); }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-ver" id="clVer"></div>
+    <ul class="cl-list" id="clList"></ul>
+  </section>
+
+  <div class="sec-title" id="secTitle">组合件：悬浮导航栏（原子拼装）</div>
+  <div class="tip" id="secTip">在内容区上下滑动可触发滚动折叠；拖动导航栏指示器可切换页面；下方开关可实时启用/禁用每个原子件层。</div>
+
+  <div class="scroll-area" id="scrollArea">
+    <p class="para">极简 · 液态玻璃 · 纯白/纯黑 · 霞鹜文楷 · Lucide。</p>
+    <p class="para">EGD 是一套跨平台自适应设计系统（Flutter 优先，Android / iOS / Web / 桌面）。纯白为底、玻璃为质、翠绿为魂。</p>
+    <p class="para">背景浅色纯白 #FFFFFF、夜间纯黑 #000000。液态玻璃为默认容器材质，能玻璃化的都玻璃化。</p>
+    <p class="para">文字层用霞鹜文楷（OFL 1.1 可商用）；图标层用 Lucide（ISC）+ SVG；禁用 emoji。</p>
+    <p class="para">对比度：正文 ≥ 4.5:1，大字 ≥ 3:1（WCAG 2.2 AA）。强调色 #00C48C。</p>
+    <p class="para">组合件由五个原子件拼装：悬浮 / 玻璃 / 拖动 / 滚动折叠 / 功能开关。</p>
+  </div>
+
+  <div class="page-panel">
+    <div class="pn"><span class="pg-label" id="pgLabel">示例</span> <span class="ac" id="pgIdx">1</span></div>
+    <div class="pd" id="pgDesc">当前页面内容 · 由导航栏切换</div>
+  </div>
+
+  <div class="switch-panel">
+    <div class="sw-row"><span class="sw-label" id="l1">悬浮层 <small id="l1s">EGDFloatingWidget</small></span><div class="switch on" data-feat="floating"></div></div>
+    <div class="sw-row"><span class="sw-label" id="l2">玻璃层 <small id="l2s">EGDLiquidGlass</small></span><div class="switch on" data-feat="glass"></div></div>
+    <div class="sw-row"><span class="sw-label" id="l3">拖动层 <small id="l3s">EGDDragSwipe</small></span><div class="switch on" data-feat="drag"></div></div>
+    <div class="sw-row"><span class="sw-label" id="l4">滚动折叠 <small id="l4s">EGDScrollHide</small></span><div class="switch on" data-feat="scrollHide"></div></div>
+  </div>
+</main>
+
+<!-- 悬浮玻璃导航栏（组合件成品） -->
+<nav class="float-nav" id="floatNav" aria-label="主导航">
+  <div class="nav-wrap" id="navWrap">
+    <div class="nav-pill" id="navPill"></div>
+    <button class="nav-item active" data-index="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg><span class="nav-label">示例</span></button>
+    <button class="nav-item" data-index="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg><span class="nav-label">示例</span></button>
+    <button class="nav-item" data-index="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span class="nav-label">示例</span></button>
+    <button class="nav-item" data-index="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3 8 9l4 13 4-13-2.5-6"/><path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"/><path d="M2 9h20"/></svg><span class="nav-label">示例</span></button>
+  </div>
+</nav>
+
+<script>
+(function () {
+  'use strict';
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0 <span class="tag">原子拼装</span><span class="cl-date">2026-10-13</span>',
+      clItems: [
+        '组合件：EGDFloatingWidget + EGDLiquidGlass + EGDDragSwipe + EGDScrollHide + 配置开关',
+        '只装配不写新逻辑；每个功能层可独立启用/禁用（关闭 = 该层不进渲染树）',
+        '拖动跟手 / 放大 1.15× / 松手弹性吸附 / 点击切换 / 滚动折叠'
+      ],
+      secTitle: '组合件：悬浮导航栏（原子拼装）',
+      secTip: '在内容区上下滑动可触发滚动折叠；拖动导航栏指示器可切换页面；下方开关可实时启用/禁用每个原子件层。',
+      pgLabel: '示例', pgDesc: '当前页面内容 · 由导航栏切换',
+      l1: '悬浮层', l2: '玻璃层', l3: '拖动层', l4: '滚动折叠',
+      navLabel: '示例'
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0 <span class="tag">Atom Assembly</span><span class="cl-date">2026-10-13</span>',
+      clItems: [
+        'Composite: EGDFloatingWidget + EGDLiquidGlass + EGDDragSwipe + EGDScrollHide + config toggles',
+        'Assembly only, no new logic; each feature layer independently togglable (off = layer not in the render tree)',
+        'Drag-follow / press scale 1.15× / elastic snap / tap-to-switch / scroll hide'
+      ],
+      secTitle: 'Composite: Floating Nav Bar (atom assembly)',
+      secTip: 'Scroll the content area to trigger scroll-hide; drag the indicator to switch pages; toggles below enable/disable each atom layer live.',
+      pgLabel: 'Example', pgDesc: 'Current page content · switched by the nav bar',
+      l1: 'Float layer', l2: 'Glass layer', l3: 'Drag layer', l4: 'Scroll Hide',
+      navLabel: 'Example'
+    }
+  };
+  var lang = 'zh';
+  var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
+  var navLabels = Array.prototype.slice.call(document.querySelectorAll('.nav-label'));
+  var pgLabels = Array.prototype.slice.call(document.querySelectorAll('.pg-label'));
+
+  /* 组合件状态：功能层开关 */
+  var feats = { floating: true, glass: true, drag: true, scrollHide: true };
+  var switches = Array.prototype.slice.call(document.querySelectorAll('.switch[data-feat]'));
+  switches.forEach(function (s) {
+    s.addEventListener('click', function () {
+      var k = s.getAttribute('data-feat');
+      feats[k] = !feats[k];
+      s.classList.toggle('on', feats[k]);
+      applyFeats();
+    });
+  });
+  function applyFeats() {
+    var nav = document.getElementById('floatNav');
+    nav.classList.toggle('plain', !feats.glass);
+    if (!feats.floating) nav.style.display = 'none'; else nav.style.display = '';
+  }
+
+  /* 导航交互：跟手拖动 + 点击切换 */
+  var wrap = document.getElementById('navWrap');
+  var pill = document.getElementById('navPill');
+  var items = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
+  var SLOT = 60, PRESS = 1.15, MOVE_TOL = 5;
+  var dragging = false, moved = false, downX = 0, downY = 0, grabDX = 0, pillX = 0, curIdx = 0;
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function select(i, animate) {
+    curIdx = i; pillX = i * SLOT;
+    items.forEach(function (el, k) { el.classList.toggle('active', k === i); });
+    document.getElementById('pgIdx').textContent = i + 1;
+    if (animate) {
+      pill.style.transition = 'transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1), scale 200ms ease';
+      pill.style.transform = 'translateX(' + pillX + 'px) scale(1)';
+      setTimeout(function () { pill.style.transition = ''; }, 560);
+    } else {
+      pill.style.transition = 'none';
+      pill.style.transform = 'translateX(' + pillX + 'px) scale(1)';
+    }
+  }
+  wrap.addEventListener('pointerdown', function (e) {
+    dragging = true; moved = false;
+    downX = e.clientX; downY = e.clientY;
+    var wr = wrap.getBoundingClientRect(), pr = pill.getBoundingClientRect();
+    grabDX = (e.clientX - wr.left) - ((pr.left - wr.left) + pr.width / 2);
+    try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
+    pill.style.transition = 'none';
+    pill.style.transform = 'translateX(' + pillX + 'px) scale(' + PRESS + ')';
+    wrap.classList.add('dragging');
+  });
+  wrap.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    if (!moved && (Math.abs(e.clientX - downX) > MOVE_TOL || Math.abs(e.clientY - downY) > MOVE_TOL)) moved = true;
+    if (!moved) return;
+    var wr = wrap.getBoundingClientRect();
+    var target = (e.clientX - wr.left) - grabDX - 28;
+    var max = (items.length - 1) * SLOT;
+    if (target < 0) target *= 0.25;
+    if (target > max) target = max + (target - max) * 0.25;
+    pillX = target;
+    pill.style.transform = 'translateX(' + target + 'px) scale(' + PRESS + ')';
+    var idx = clamp(Math.round(target / SLOT), 0, items.length - 1);
+    items.forEach(function (el, k) { el.classList.toggle('active', k === idx); });
+  });
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false;
+    wrap.classList.remove('dragging');
+    if (!moved) {
+      var wr = wrap.getBoundingClientRect();
+      select(clamp(Math.floor((e.clientX - wr.left) / SLOT), 0, items.length - 1), true);
+    } else {
+      select(clamp(Math.round(pillX / SLOT), 0, items.length - 1), true);
+    }
+  }
+  wrap.addEventListener('pointerup', endDrag);
+  wrap.addEventListener('pointercancel', endDrag);
+
+  /* 滚动折叠：下滑隐藏 / 上滑展开 */
+  var scrollArea = document.getElementById('scrollArea');
+  var floatNav = document.getElementById('floatNav');
+  var lastOffset = 0, accumulated = 0, isHidden = false;
+  scrollArea.addEventListener('scroll', function () {
+    if (!feats.scrollHide) return;
+    var now = scrollArea.scrollTop;
+    var delta = now - lastOffset;
+    lastOffset = now;
+    if (delta < 0) { accumulated = 0; if (isHidden) setHidden(false); }
+    else if (delta > 0) { accumulated += delta; if (!isHidden && accumulated > 80) { setHidden(true); accumulated = 0; } }
+  });
+  function setHidden(v) { isHidden = v; floatNav.classList.toggle('hide', v); }
+
+  function render() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    document.getElementById('clVer').innerHTML = d.clVer;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    document.getElementById('secTitle').textContent = d.secTitle;
+    document.getElementById('secTip').textContent = d.secTip;
+    document.getElementById('pgDesc').textContent = d.pgDesc;
+    document.getElementById('l1').innerHTML = d.l1 + ' <small>EGDFloatingWidget</small>';
+    document.getElementById('l2').innerHTML = d.l2 + ' <small>EGDLiquidGlass</small>';
+    document.getElementById('l3').innerHTML = d.l3 + ' <small>EGDDragSwipe</small>';
+    document.getElementById('l4').innerHTML = d.l4 + ' <small>EGDScrollHide</small>';
+    navLabels.forEach(function (el) { el.textContent = d.navLabel; });
+    pgLabels.forEach(function (el) { el.textContent = d.pgLabel; });
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); });
+  });
+  render();
+  select(0, false);
+  applyFeats();
+})();
+</script>
+</body>
+</html>
