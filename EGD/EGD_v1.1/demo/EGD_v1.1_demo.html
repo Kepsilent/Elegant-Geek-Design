@@ -139,17 +139,17 @@ body {
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 0.5px solid var(--glass-border);
   box-shadow: var(--glass-shadow), var(--glass-highlight);
-  padding: 0 0 96px;
+  padding: 20px 0;
   overflow: hidden;
 }
-.nav-stage .page { display: none; padding: 28px 20px 0; }
+.nav-stage .page { display: none; padding: 28px 20px; min-height: 120px; }
 .nav-stage .page.active { display: block; }
 .nav-stage .page-name { font-size: 18px; font-weight: 700; }
 .nav-stage .page-name .accent { color: var(--accent-text); }
 .nav-stage .page-demo { margin-top: 10px; font-size: 13px; color: var(--text-2); }
 
 .float-nav {
-  position: absolute;
+  position: fixed;
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
@@ -164,7 +164,9 @@ body {
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
 }
+.float-nav.hide { transform: translate(-50%, 180%); opacity: 0; }
 .float-nav::before {
   content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%;
   background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent);
@@ -270,28 +272,6 @@ body {
       <div class="page-name"><span class="pg-label">示例</span> <span class="accent">4</span></div>
       <div class="page-demo"><span class="pg-demo">示例</span> 4</div>
     </section>
-
-    <nav class="float-nav" aria-label="悬浮导航">
-      <div class="nav-wrap" id="navWrap">
-        <div class="nav-pill" id="navPill"></div>
-        <button class="nav-item active" data-index="0">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-        <button class="nav-item" data-index="1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-        <button class="nav-item" data-index="2">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-        <button class="nav-item" data-index="3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3 8 9l4 13 4-13-2.5-6"/><path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"/><path d="M2 9h20"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-      </div>
-    </nav>
   </div>
 
   <!-- 3. Lucide 图标 -->
@@ -318,6 +298,29 @@ body {
   </div>
 </main>
 
+<!-- 全局悬浮导航：fixed 在视口底部，监听整页 window 滚动折叠 -->
+<nav class="float-nav" id="floatNav" aria-label="悬浮导航">
+  <div class="nav-wrap" id="navWrap">
+    <div class="nav-pill" id="navPill"></div>
+    <button class="nav-item active" data-index="0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+      <span class="nav-label">示例</span>
+    </button>
+    <button class="nav-item" data-index="1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
+      <span class="nav-label">示例</span>
+    </button>
+    <button class="nav-item" data-index="2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+      <span class="nav-label">示例</span>
+    </button>
+    <button class="nav-item" data-index="3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3 8 9l4 13 4-13-2.5-6"/><path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"/><path d="M2 9h20"/></svg>
+      <span class="nav-label">示例</span>
+    </button>
+  </div>
+</nav>
+
 <script>
 (function () {
   'use strict';
@@ -331,7 +334,8 @@ body {
         '新增：基地综合演示——一页呈现 EGD 四大支柱（Color 色板 / Floating Nav 悬浮导航 / Lucide 图标 / 霞鹜文楷字体），中英切换单文件',
         '新增：README 中英双版本（README.md 中文 / README_en.md 英文，链接互跳）',
         '新增：核心文档英文版 Elegant_Geek_Design_en.md',
-        '变更：核心文档顶部新增「EGD 是什么」；EGD 本体移出模块体系（非模块，仅作统筹文档 + 核心 Tokens）'
+        '变更：核心文档顶部新增「EGD 是什么」；EGD 本体移出模块体系（非模块，仅作统筹文档 + 核心 Tokens）',
+        '修正：悬浮导航改为全局 fixed 定位，折叠跟随整页 window 滚动（下滑收起 / 上滑展开），不再锁在演示卡片内'
       ],
       s1: 'Color 色板', s2: 'Floating Nav 悬浮导航', s3: 'Lucide 图标', s4: '字体 霞鹜文楷',
       use: ['品牌填充 / 选中态', '深色强调', '白底文字', '白字底衬', '浅绿底衬', '正文', '次要文字', '弱化文字', '浅色玻璃底'],
@@ -344,7 +348,8 @@ body {
         'Added: base showcase demo — EGD\'s four pillars on one page (Color palette / Floating Nav / Lucide icons / LXGW WenKai font), single file with ZH/EN switch',
         'Added: bilingual README (README.md Chinese / README_en.md English, linked to each other)',
         'Added: English core doc Elegant_Geek_Design_en.md',
-        'Changed: core doc now opens with "What EGD Is"; EGD core removed from the module system (not a module — orchestration doc + core tokens only)'
+        'Changed: core doc now opens with "What EGD Is"; EGD core removed from the module system (not a module — orchestration doc + core tokens only)',
+        'Fixed: floating nav is now globally fixed and collapses on whole-page window scroll (hide on scroll down / show on scroll up), no longer locked inside the stage card'
       ],
       s1: 'Color Palette', s2: 'Floating Nav', s3: 'Lucide Icons', s4: 'Font LXGW WenKai',
       use: ['Brand fill / selected state', 'Dark accent', 'Text on white', 'White-text backdrop', 'Light green backdrop', 'Body text', 'Secondary text', 'Tertiary text', 'Light glass bg'],
@@ -460,6 +465,21 @@ body {
   }
   wrap.addEventListener('pointerup', endDrag);
   wrap.addEventListener('pointercancel', endDrag);
+
+  /* ===== 全局滚动折叠：导航 fixed 在视口底部，监听整页 window 滚动 ===== */
+  var floatNav = document.getElementById('floatNav');
+  var lastY = window.scrollY, accScroll = 0, navHidden = false;
+  function setNavHidden(v) {
+    navHidden = v;
+    floatNav.classList.toggle('hide', v);
+  }
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    var d = y - lastY;
+    lastY = y;
+    if (d < 0) { accScroll = 0; if (navHidden) setNavHidden(false); }
+    else if (d > 0) { accScroll += d; if (!navHidden && accScroll > 80) { setNavHidden(true); accScroll = 0; } }
+  }, { passive: true });
 
   render();
   select(0, false);
