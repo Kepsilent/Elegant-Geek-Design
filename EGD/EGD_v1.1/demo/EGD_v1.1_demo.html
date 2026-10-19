@@ -3,545 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EGD v1.1</title>
+<title>EGD · Elegant Geek Design</title>
 <style>
 @font-face {
   font-family: "LXGW WenKai";
   src: url("../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-display: swap;
+  font-weight: 400; font-display: swap;
 }
 @font-face {
   font-family: "LXGW WenKai";
   src: url("../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
-  font-weight: 500 700;
-  font-display: swap;
+  font-weight: 500 700; font-display: swap;
 }
-
 :root {
-  --bg: #FFFFFF;
-  --text: #1D1D1F;
-  --text-2: #6E6E73;
-  --text-3: #AEAEB2;
-  --accent: #00C48C;
-  --accent-text: #007A55;
-  --accent-glass: rgba(0,196,140,0.14);
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
   --accent-border: rgba(0,196,140,0.25);
-  --glass-bg: rgba(255,255,255,0.55);
-  --glass-border: rgba(0,0,0,0.08);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
   --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
   --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
-  --separator: rgba(0,0,0,0.08);
   --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-}
-.wrap { max-width: 560px; margin: 0 auto; padding: 24px 20px 120px; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
 
-/* 语言切换 */
-.lang-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 3px;
-  border-radius: 999px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-highlight);
-  margin-bottom: 20px;
-}
-.lang-toggle button {
-  border: none; background: transparent;
-  font-family: var(--font);
-  font-size: 13px; font-weight: 600;
-  color: var(--text-2);
-  padding: 6px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 200ms ease;
-}
-.lang-toggle button.active {
-  background: var(--accent-glass);
-  border: 0.5px solid var(--accent-border);
-  color: var(--accent-text);
-}
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; transition: all 200ms ease; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
 
-/* CHANGELOG */
-.changelog {
-  border-radius: 18px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-shadow), var(--glass-highlight);
-  padding: 16px 20px;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 24px;
-}
-.changelog::before {
-  content: ''; position: absolute; top: 0; left: 10px; right: 10px; height: 40%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
-  pointer-events: none;
-}
-.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
-.cl-entry { padding: 10px 0; border-bottom: 0.5px solid var(--separator); }
-.cl-entry:last-child { border-bottom: none; }
-.cl-ver { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-.cl-ver .tag {
-  font-size: 11px; font-weight: 600; color: var(--accent-text);
-  background: var(--accent-glass); border: 0.5px solid var(--accent-border);
-  border-radius: 999px; padding: 1px 8px;
-}
-.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.hero { margin-bottom: 20px; }
+.hero h1 { font-size: 22px; font-weight: 700; }
+.hero h1 .accent { color: var(--accent-text); }
+.hero p { font-size: 13.5px; color: var(--text-2); line-height: 1.8; margin-top: 6px; }
+
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 28px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 10px; }
 .cl-list { list-style: none; }
-.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
-.cl-list li::before {
-  content: ''; position: absolute; left: 1px; top: 9px;
-  width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
-}
+.cl-list li { font-size: 13px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; margin-bottom: 4px; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 
-.section-title { font-size: 15px; font-weight: 600; margin: 24px 0 12px; }
-.section-title::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); margin-right: 8px; vertical-align: 1px; }
+.section-title { font-size: 15px; font-weight: 700; margin: 26px 0 10px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.section-title::before { content: ''; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); align-self: center; flex-shrink: 0; }
+.section-title .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.section-desc { font-size: 12px; color: var(--text-3); margin: -4px 0 10px; line-height: 1.6; }
 
-/* 1. Color */
-.swatches { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.swatch {
-  border-radius: 14px;
-  border: 0.5px solid var(--glass-border);
-  overflow: hidden;
-  background: var(--glass-bg);
-  box-shadow: var(--glass-highlight);
-}
-.swatch .chip { height: 56px; position: relative; }
-.swatch .chip .hex {
-  position: absolute; right: 8px; bottom: 6px;
-  font-size: 10px; font-family: monospace;
-  color: rgba(0,0,0,0.55);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-}
-.swatch .meta { padding: 6px 10px 8px; }
-.swatch .meta .name { font-size: 12px; font-weight: 600; }
-.swatch .meta .use { font-size: 10.5px; color: var(--text-3); margin-top: 1px; }
-
-/* 2. Floating Nav（复用 floating_nav 模块交互） */
-.nav-stage {
-  position: relative;
-  height: 360px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  border-radius: 18px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-shadow), var(--glass-highlight);
-}
-.nav-stage .page { display: none; padding: 28px 20px 96px; }
-.nav-stage .page.active { display: block; }
-.nav-stage .page-name { font-size: 18px; font-weight: 700; }
-.nav-stage .page-name .accent { color: var(--accent-text); }
-.nav-stage .page-demo { margin-top: 10px; font-size: 13px; color: var(--text-2); }
-.nav-stage .para { font-size: 13.5px; color: var(--text-2); line-height: 1.9; margin-bottom: 16px; }
-
-/* 滚动折叠开关 */
-.toggle-row { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding: 0 2px; }
-.toggle-row .t-label { font-size: 13px; color: var(--text-2); }
-.toggle-row .t-label small { display: block; font-size: 11px; color: var(--text-3); font-weight: 400; }
-.switch { position: relative; width: 44px; height: 26px; border-radius: 999px; background: rgba(0,0,0,0.12); transition: background 200ms ease; cursor: pointer; flex-shrink: 0; }
-.switch.on { background: var(--accent); }
-.switch .knob { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 200ms cubic-bezier(0.34,1.56,0.64,1); }
-.switch.on .knob { transform: translateX(18px); }
-
-.float-nav {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  padding: 7px;
-  border-radius: 24px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-shadow), var(--glass-highlight);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: none;
-  transition: transform 300ms ease-out, opacity 300ms ease-out;
-}
-.float-nav.hide { transform: translate(-50%, 180%); opacity: 0; }
-.float-nav::before {
-  content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent);
-  border-radius: 24px 24px 0 0;
-  pointer-events: none;
-}
-.nav-wrap { position: relative; display: flex; align-items: center; gap: 4px; height: 70px; cursor: grab; }
-.nav-wrap.dragging { cursor: grabbing; }
-.nav-item {
-  position: relative; z-index: 2;
-  width: 56px; height: 56px;
-  border: none; background: transparent;
-  border-radius: 16px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 2px;
-  color: var(--text-3); cursor: pointer;
-  font-family: var(--font); font-size: 10px;
-  transition: color 200ms cubic-bezier(0.4,0,0.2,1);
-  -webkit-tap-highlight-color: transparent;
-}
-.nav-item svg { width: 20px; height: 20px; }
-.nav-item.active { color: var(--accent-text); }
-.nav-pill {
-  position: absolute; left: 0; top: 7px;
-  width: 56px; height: 56px;
-  border-radius: 18px;
-  background: var(--accent-glass);
-  border: 0.5px solid var(--accent-border);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.06);
-  z-index: 1; pointer-events: none;
-}
-.nav-wrap.dragging .nav-pill {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 0 12px rgba(0,0,0,0.10), 0 4px 16px rgba(0,0,0,0.12);
-}
-
-/* 3. Lucide 图标 */
-.icon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.icon-cell {
-  border-radius: 14px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-highlight);
-  padding: 14px 0 10px;
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  color: var(--text-2);
-}
-.icon-cell svg { width: 22px; height: 22px; }
-.icon-cell .iname { font-size: 10px; color: var(--text-3); }
-
-/* 4. 字体 */
-.type-scale { display: flex; flex-direction: column; gap: 6px; }
-.type-scale .row { display: flex; align-items: baseline; gap: 12px; }
-.type-scale .size { width: 40px; font-size: 11px; color: var(--text-3); font-family: monospace; }
+.frame-card { border-radius: 18px; overflow: hidden; border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow); background: #fff; }
+.frame-card iframe { display: block; width: 100%; height: 600px; border: none; }
+.frame-card.tall iframe { height: 680px; }
+.note { font-size: 11.5px; color: var(--text-3); margin-top: 18px; line-height: 1.6; }
 </style>
 </head>
 <body>
-
 <main class="wrap">
-  <!-- 语言切换：中文 / English -->
   <div class="lang-toggle" id="langToggle">
     <button type="button" class="active" data-lang="zh">中文</button>
     <button type="button" data-lang="en">English</button>
   </div>
 
-  <!-- CHANGELOG：中文界面调用 _changelog_zh.md，英文界面调用 _changelog_en.md -->
+  <div class="hero">
+    <h1>Elegant <span class="accent">Geek</span> Design</h1>
+    <p id="heroDesc">EGD 总览页：按「原子控件 → 组合控件」两级架构，把每个组件的可交互 Demo 汇集于此。每个 Demo 都可独立操作、自带中英切换。</p>
+  </div>
+
   <section class="changelog">
     <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
-    <div class="cl-entry" id="clEntry"></div>
+    <ul class="cl-list" id="clList"></ul>
   </section>
 
-  <!-- 1. Color -->
-  <div class="section-title" id="s1">Color 色板</div>
-  <div class="swatches">
-    <div class="swatch"><div class="chip" style="background:#00C48C"><span class="hex">#00C48C</span></div><div class="meta"><div class="name">accent</div><div class="use" data-i18n="use1">品牌填充 / 选中态</div></div></div>
-    <div class="swatch"><div class="chip" style="background:#00D494"><span class="hex">#00D494</span></div><div class="meta"><div class="name">accentDark</div><div class="use" data-i18n="use2">深色强调</div></div></div>
-    <div class="swatch"><div class="chip" style="background:#007A55"><span class="hex">#007A55</span></div><div class="meta"><div class="name">accentText</div><div class="use" data-i18n="use3">白底文字</div></div></div>
-    <div class="swatch"><div class="chip" style="background:#00855C"><span class="hex">#00855C</span></div><div class="meta"><div class="name">accentStrong</div><div class="use" data-i18n="use4">白字底衬</div></div></div>
-    <div class="swatch"><div class="chip" style="background:#E6F9F1"><span class="hex">#E6F9F1</span></div><div class="meta"><div class="name">accentLight</div><div class="use" data-i18n="use5">浅绿底衬</div></div></div>
-    <div class="swatch"><div class="chip" style="background:#1D1D1F"><span class="hex">#1D1D1F</span></div><div class="meta"><div class="name">textPrimary</div><div class="use" data-i18n="use6">正文</div></div></div>
-    <div class="swatch"><div class="chip" style="background:#6E6E73"><span class="hex">#6E6E73</span></div><div class="meta"><div class="name">textSecondary</div><div class="use" data-i18n="use7">次要文字</div></div></div>
-    <div class="swatch"><div class="chip" style="background:#AEAEB2"><span class="hex">#AEAEB2</span></div><div class="meta"><div class="name">textTertiary</div><div class="use" data-i18n="use8">弱化文字</div></div></div>
-    <div class="swatch"><div class="chip" style="background:rgba(255,255,255,0.55); border-bottom:0.5px solid rgba(0,0,0,0.08)"><span class="hex">55%</span></div><div class="meta"><div class="name">glassBg</div><div class="use" data-i18n="use9">浅色玻璃底</div></div></div>
-  </div>
+  <div class="section-title" id="tAtoms">原子控件 <span class="tag">Atoms · 基层基座</span></div>
+  <div class="section-desc" id="dAtoms">各自独立、装饰器式包裹，可单独取用。</div>
 
-  <!-- 2. Floating Nav -->
-  <div class="section-title" id="s2">Floating Nav 悬浮导航</div>
-  <div class="nav-stage">
-    <section class="page active" id="page-0">
-      <div class="page-name"><span class="pg-label">示例</span> <span class="accent">1</span></div>
-      <div class="page-demo"><span class="pg-demo">示例</span> 1</div>
-    </section>
-    <section class="page" id="page-1">
-      <div class="page-name"><span class="pg-label">示例</span> <span class="accent">2</span></div>
-      <div class="page-demo"><span class="pg-demo">示例</span> 2</div>
-    </section>
-    <section class="page" id="page-2">
-      <div class="page-name"><span class="pg-label">示例</span> <span class="accent">3</span></div>
-      <div class="page-demo"><span class="pg-demo">示例</span> 3</div>
-    </section>
-    <section class="page" id="page-3">
-      <div class="page-name"><span class="pg-label">示例</span> <span class="accent">4</span></div>
-      <div class="page-demo"><span class="pg-demo">示例</span> 4</div>
-      <div class="page-body"></div>
-    </section>
+  <div class="section-title" id="tColor">Color 色板</div>
+  <div class="frame-card"><iframe src="../../../modules/color/color_v1.0/demo/eg_color_v1.0_demo.html" loading="lazy" title="Color"></iframe></div>
 
-    <nav class="float-nav" id="floatNav" aria-label="悬浮导航">
-      <div class="nav-wrap" id="navWrap">
-        <div class="nav-pill" id="navPill"></div>
-        <button class="nav-item active" data-index="0">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-        <button class="nav-item" data-index="1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-        <button class="nav-item" data-index="2">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-        <button class="nav-item" data-index="3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3 8 9l4 13 4-13-2.5-6"/><path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"/><path d="M2 9h20"/></svg>
-          <span class="nav-label">示例</span>
-        </button>
-      </div>
-    </nav>
-  </div>
+  <div class="section-title" id="tGlass">Liquid Glass 液态玻璃</div>
+  <div class="frame-card"><iframe src="../../../modules/liquid_glass/liquid_glass_v1.0/demo/eg_liquid_glass_v1.0_demo.html" loading="lazy" title="Liquid Glass"></iframe></div>
 
-  <!-- 滚动折叠开关 -->
-  <div class="toggle-row">
-    <span class="t-label" id="toggleLabel">滚动折叠<small id="toggleSub">下滑隐藏 / 上滑展开</small></span>
-    <div class="switch on" id="scrollHideSwitch" role="switch" aria-checked="true"><div class="knob"></div></div>
-  </div>
+  <div class="section-title" id="tDrag">Drag Swipe 拖动滑动</div>
+  <div class="frame-card"><iframe src="../../../modules/drag_swipe/drag_swipe_v1.0/demo/eg_drag_swipe_v1.0_demo.html" loading="lazy" title="Drag Swipe"></iframe></div>
 
-  <!-- 3. Lucide 图标 -->
-  <div class="section-title" id="s3">Lucide 图标</div>
-  <div class="icon-grid">
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg><span class="iname">layout-grid</span></div>
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg><span class="iname">layers</span></div>
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span class="iname">box</span></div>
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3 8 9l4 13 4-13-2.5-6"/><path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"/><path d="M2 9h20"/></svg><span class="iname">gem</span></div>
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg><span class="iname">sparkles</span></div>
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span class="iname">settings</span></div>
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span class="iname">search</span></div>
-    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg><span class="iname">bell</span></div>
-  </div>
+  <div class="section-title" id="tFloat">Floating Widget 悬浮控件</div>
+  <div class="frame-card"><iframe src="../../../modules/floating_widget/floating_widget_v1.0/demo/eg_floating_widget_v1.0_demo.html" loading="lazy" title="Floating Widget"></iframe></div>
 
-  <!-- 4. 字体 -->
-  <div class="section-title" id="s4">字体 霞鹜文楷</div>
-  <div class="type-scale">
-    <div class="row"><span class="size">22</span><span style="font-size:22px; font-weight:700"><span class="t-demo">示例</span> Display</span></div>
-    <div class="row"><span class="size">18</span><span style="font-size:18px; font-weight:600"><span class="t-demo">示例</span> Title</span></div>
-    <div class="row"><span class="size">14</span><span style="font-size:14px"><span class="t-demo">示例</span> Body</span></div>
-    <div class="row"><span class="size">13</span><span style="font-size:13px; color:var(--text-2)"><span class="t-demo">示例</span> BodySm</span></div>
-    <div class="row"><span class="size">10</span><span style="font-size:10px; color:var(--text-3)"><span class="t-demo">示例</span> Caption</span></div>
-  </div>
+  <div class="section-title" id="tScroll">Scroll Hide 滚动折叠</div>
+  <div class="frame-card"><iframe src="../../../modules/scroll_hide/scroll_hide_v1.0/demo/eg_scroll_hide_v1.0_demo.html" loading="lazy" title="Scroll Hide"></iframe></div>
+
+  <div class="section-title" id="tToggle">Toggle 开关</div>
+  <div class="frame-card"><iframe src="../../../modules/toggle/toggle_v1.0/demo/eg_toggle_v1.0_demo.html" loading="lazy" title="Toggle"></iframe></div>
+
+  <div class="section-title" id="tComp">组合控件 <span class="tag">Composite · 原子拼装</span></div>
+  <div class="section-desc" id="dComp">只把原子件拼装在一起，不写新逻辑。</div>
+
+  <div class="section-title" id="tNavBar">Floating Nav Bar 悬浮导航栏</div>
+  <div class="frame-card tall"><iframe src="../../../modules/floating_nav_bar/floating_nav_bar_v1.0/demo/eg_floating_nav_bar_v1.0_demo.html" loading="lazy" title="Floating Nav Bar"></iframe></div>
+
+  <p class="note" id="note">注：各 Demo 内的语言切换按钮控制该组件自身界面；本页顶部切换控制总览标题。第三方字体/图标未随仓库发布，预览时回退系统字体。</p>
 </main>
 
 <script>
 (function () {
   'use strict';
-
-  /* ===== 中英文案 ===== */
   var I18N = {
     zh: {
       clTitle: '更新日志 CHANGELOG',
-      clVer: 'v1.1', clTag: '设计系统本体', clDate: '2026-10-10',
       clItems: [
-        '新增：基地综合演示——一页呈现 EGD 四大支柱（Color 色板 / Floating Nav 悬浮导航 / Lucide 图标 / 霞鹜文楷字体），中英切换单文件',
-        '新增：README 中英双版本（README.md 中文 / README_en.md 英文，链接互跳）',
-        '新增：核心文档英文版 Elegant_Geek_Design_en.md',
-        '变更：核心文档顶部新增「EGD 是什么」；EGD 本体移出模块体系（非模块，仅作统筹文档 + 核心 Tokens）',
-        '修正：悬浮导航折叠嵌回演示卡片内——卡片内容可上下滑动，下滑收起导航、上滑展开；新增滚动折叠开关可实时启停'
+        'EGD 总览页改为组合模式：以 iframe 嵌入全部原子件 + 组合件 Demo，单一事实来源，组件 Demo 更新即同步',
+        '原子层：Color / Liquid Glass / Drag Swipe / Floating Widget / Scroll Hide / Toggle',
+        '组合层：Floating Nav Bar（悬浮 + 玻璃 + 拖动 + 滚动折叠 拼装）'
       ],
-      s1: 'Color 色板', s2: 'Floating Nav 悬浮导航', s3: 'Lucide 图标', s4: '字体 霞鹜文楷',
-      use: ['品牌填充 / 选中态', '深色强调', '白底文字', '白字底衬', '浅绿底衬', '正文', '次要文字', '弱化文字', '浅色玻璃底'],
-      pageLabel: '示例', navLabel: '示例', tDemo: '示例',
-      tLabel: '滚动折叠', tSub: '下滑隐藏 / 上滑展开'
+      heroDesc: 'EGD 总览页：按「原子控件 → 组合控件」两级架构，把每个组件的可交互 Demo 汇集于此。每个 Demo 都可独立操作、自带中英切换。',
+      tAtoms: '原子控件', dAtoms: '各自独立、装饰器式包裹，可单独取用。',
+      tColor: 'Color 色板', tGlass: 'Liquid Glass 液态玻璃', tDrag: 'Drag Swipe 拖动滑动',
+      tFloat: 'Floating Widget 悬浮控件', tScroll: 'Scroll Hide 滚动折叠', tToggle: 'Toggle 开关',
+      tComp: '组合控件', dComp: '只把原子件拼装在一起，不写新逻辑。',
+      tNavBar: 'Floating Nav Bar 悬浮导航栏',
+      note: '注：各 Demo 内的语言切换按钮控制该组件自身界面；本页顶部切换控制总览标题。第三方字体/图标未随仓库发布，预览时回退系统字体。'
     },
     en: {
       clTitle: 'CHANGELOG',
-      clVer: 'v1.1', clTag: 'Design System Core', clDate: '2026-10-10',
       clItems: [
-        'Added: base showcase demo — EGD\'s four pillars on one page (Color palette / Floating Nav / Lucide icons / LXGW WenKai font), single file with ZH/EN switch',
-        'Added: bilingual README (README.md Chinese / README_en.md English, linked to each other)',
-        'Added: English core doc Elegant_Geek_Design_en.md',
-        'Changed: core doc now opens with "What EGD Is"; EGD core removed from the module system (not a module — orchestration doc + core tokens only)',
-        'Fixed: nav collapse moved back inside the showcase card — scrollable card content hides the nav on scroll down and shows it on scroll up; added a scroll-hide toggle to enable/disable it live'
+        'EGD overview is now a composition: embeds every atom + composite demo via iframe (single source of truth; updates propagate automatically)',
+        'Atoms: Color / Liquid Glass / Drag Swipe / Floating Widget / Scroll Hide / Toggle',
+        'Composite: Floating Nav Bar (float + glass + drag + scroll-hide assembled)'
       ],
-      s1: 'Color Palette', s2: 'Floating Nav', s3: 'Lucide Icons', s4: 'Font LXGW WenKai',
-      use: ['Brand fill / selected state', 'Dark accent', 'Text on white', 'White-text backdrop', 'Light green backdrop', 'Body text', 'Secondary text', 'Tertiary text', 'Light glass bg'],
-      pageLabel: 'Example', navLabel: 'Example', tDemo: 'Example',
-      tLabel: 'Scroll Hide', tSub: 'hide on scroll down / show up'
+      heroDesc: 'EGD overview: every interactive demo gathered under a two-tier "atoms → composites" architecture. Each demo is self-contained with its own ZH/EN switch.',
+      tAtoms: 'Atoms', dAtoms: 'Independent, decorator-style wrappers; usable on their own.',
+      tColor: 'Color Palette', tGlass: 'Liquid Glass', tDrag: 'Drag Swipe',
+      tFloat: 'Floating Widget', tScroll: 'Scroll Hide', tToggle: 'Toggle Switch',
+      tComp: 'Composites', dComp: 'Assembles atoms only; no new logic.',
+      tNavBar: 'Floating Nav Bar',
+      note: 'Note: the language button inside each demo toggles that component UI; the top toggle controls overview titles. Third-party fonts/icons are not shipped in the repo and fall back to system fonts in preview.'
     }
   };
-
   var lang = 'zh';
-  var toggle = document.getElementById('langToggle');
-  var btns = Array.prototype.slice.call(toggle.querySelectorAll('button'));
-  var clEntry = document.getElementById('clEntry');
-  var useEls = Array.prototype.slice.call(document.querySelectorAll('[data-i18n]'));
-  var pgLabels = Array.prototype.slice.call(document.querySelectorAll('.pg-label'));
-  var pgDemos = Array.prototype.slice.call(document.querySelectorAll('.pg-demo'));
-  var navLabels = Array.prototype.slice.call(document.querySelectorAll('.nav-label'));
-  var tDemos = Array.prototype.slice.call(document.querySelectorAll('.t-demo'));
-
-  function renderChangelog(d) {
-    var items = d.clItems.map(function (t) {
-      return '<li>' + t + '</li>';
-    }).join('');
-    clEntry.innerHTML =
-      '<div class="cl-ver">' + d.clVer + ' <span class="tag">' + d.clTag + '</span>' +
-      '<span class="cl-date">' + d.clDate + '</span></div>' +
-      '<ul class="cl-list">' + items + '</ul>';
-  }
+  var btns = Array.prototype.slice.call(document.querySelectorAll('#langToggle button'));
+  var ids = ['heroDesc','clTitle','tAtoms','dAtoms','tColor','tGlass','tDrag','tFloat','tScroll','tToggle','tComp','dComp','tNavBar','note'];
 
   function render() {
     var d = I18N[lang];
-    document.getElementById('clTitle').textContent = d.clTitle;
-    renderChangelog(d);
-    document.getElementById('s1').textContent = d.s1;
-    document.getElementById('s2').textContent = d.s2;
-    document.getElementById('s3').textContent = d.s3;
-    document.getElementById('s4').textContent = d.s4;
-    useEls.forEach(function (el, i) { el.textContent = d.use[i]; });
-    pgLabels.forEach(function (el) { el.textContent = d.pageLabel; });
-    pgDemos.forEach(function (el) { el.textContent = d.pageLabel; });
-    navLabels.forEach(function (el) { el.textContent = d.navLabel; });
-    tDemos.forEach(function (el) { el.textContent = d.tDemo; });
-    document.getElementById('toggleLabel').childNodes[0].textContent = d.tLabel + ' ';
-    document.getElementById('toggleSub').textContent = d.tSub;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t){ return '<li>'+t+'</li>'; }).join('');
+    ids.forEach(function (id) { var el = document.getElementById(id); if (el && d[id] !== undefined) el.textContent = d[id]; });
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
   }
-
-  btns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      lang = b.getAttribute('data-lang');
-      render();
-      fillPages();
-    });
-  });
-
-  /* ===== 悬浮导航交互（跟手拖动 + 点击切换，方圆形居中） ===== */
-  var wrap = document.getElementById('navWrap');
-  var pill = document.getElementById('navPill');
-  var items = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
-  var pages = Array.prototype.slice.call(document.querySelectorAll('.nav-stage .page'));
-  var SLOT = 60, PRESS = 1.15, MOVE_TOL = 5;
-  var dragging = false, moved = false, downX = 0, downY = 0, grabDX = 0, pillX = 0;
-  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-  function select(i, animate) {
-    if (i < 0 || i >= items.length) return;
-    pillX = i * SLOT;
-    items.forEach(function (el, k) { el.classList.toggle('active', k === i); });
-    pages.forEach(function (p, k) { p.classList.toggle('active', k === i); });
-    if (animate) {
-      pill.style.transition = 'transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1)';
-      pill.style.transform = 'translateX(' + pillX + 'px)';
-      setTimeout(function () { pill.style.transition = ''; }, 540);
-    } else {
-      pill.style.transition = 'none';
-      pill.style.transform = 'translateX(' + pillX + 'px)';
-    }
-  }
-  wrap.addEventListener('pointerdown', function (e) {
-    dragging = true; moved = false;
-    downX = e.clientX; downY = e.clientY;
-    var wr = wrap.getBoundingClientRect();
-    var pr = pill.getBoundingClientRect();
-    var pillCenter = (pr.left - wr.left) + pr.width / 2;
-    grabDX = (e.clientX - wr.left) - pillCenter;
-    try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
-    pill.style.transition = 'none';
-    pill.style.transform = 'translateX(' + pillX + 'px) scale(' + PRESS + ')';
-    wrap.classList.add('dragging');
-  });
-  wrap.addEventListener('pointermove', function (e) {
-    if (!dragging) return;
-    if (!moved && (Math.abs(e.clientX - downX) > MOVE_TOL || Math.abs(e.clientY - downY) > MOVE_TOL)) moved = true;
-    if (!moved) return;
-    var wr = wrap.getBoundingClientRect();
-    var target = (e.clientX - wr.left) - grabDX - 28;  // 28 = pill 半宽，跟手居中
-    var max = (items.length - 1) * SLOT;
-    if (target < 0) target *= 0.25;
-    if (target > max) target = max + (target - max) * 0.25;
-    pillX = target;
-    pill.style.transform = 'translateX(' + target + 'px) scale(' + PRESS + ')';
-    var idx = clamp(Math.round(target / SLOT), 0, items.length - 1);
-    items.forEach(function (el, k) { el.classList.toggle('active', k === idx); });
-  });
-  function endDrag(e) {
-    if (!dragging) return;
-    dragging = false;
-    wrap.classList.remove('dragging');
-    if (!moved) {
-      var wr = wrap.getBoundingClientRect();
-      var x = e.clientX - wr.left;
-      var idx = clamp(Math.floor(x / SLOT), 0, items.length - 1);
-      select(idx, true);
-    } else {
-      var idx2 = clamp(Math.round(pillX / SLOT), 0, items.length - 1);
-      select(idx2, true);
-    }
-  }
-  wrap.addEventListener('pointerup', endDrag);
-  wrap.addEventListener('pointercancel', endDrag);
-
-  /* ===== 卡片内滚动折叠：导航 absolute 在 stage 底部，监听 stage 内部滚动 ===== */
-  var floatNav = document.getElementById('floatNav');
-  var stage = document.querySelector('.nav-stage');
-  var scrollHideSwitch = document.getElementById('scrollHideSwitch');
-  var toggleLabel = document.getElementById('toggleLabel');
-  var scrollHideOn = true;
-  var lastY = 0, accScroll = 0, navHidden = false;
-
-  function setNavHidden(v) {
-    navHidden = v;
-    floatNav.classList.toggle('hide', v);
-  }
-  // 开关关掉时立即展开并停止折叠
-  scrollHideSwitch.addEventListener('click', function () {
-    scrollHideOn = !scrollHideOn;
-    scrollHideSwitch.classList.toggle('on', scrollHideOn);
-    scrollHideSwitch.setAttribute('aria-checked', String(scrollHideOn));
-    if (!scrollHideOn && navHidden) setNavHidden(false);
-  });
-
-  stage.addEventListener('scroll', function () {
-    if (!scrollHideOn) return;
-    var y = stage.scrollY || stage.scrollTop;
-    var d = y - lastY;
-    lastY = y;
-    if (d < 0) { accScroll = 0; if (navHidden) setNavHidden(false); }
-    else if (d > 0) { accScroll += d; if (!navHidden && accScroll > 60) { setNavHidden(true); accScroll = 0; } }
-  }, { passive: true });
-
-  // 给每个页面填充足够多的占位段落，保证 stage 内部可滚动
-  function fillPages() {
-    var lines = lang === 'zh'
-      ? ['示例内容 · 在卡片内上下滑动，底部导航会收起。', '继续向下滑。', '上滑一下，导航又回来。', '阈值可调、方向可控。', '占位段落用于撑出滚动。']
-      : ['Sample content · scroll inside the card, the bottom nav hides.', 'Keep scrolling down.', 'Scroll up, the nav returns.', 'Adjustable threshold & direction.', 'Filler text to enable scrolling.'];
-    pages.forEach(function (pg) {
-      var body = pg.querySelector('.page-body');
-      if (!body) {
-        body = document.createElement('div');
-        body.className = 'page-body';
-        pg.appendChild(body);
-      }
-      body.innerHTML = '';
-      for (var i = 0; i < 14; i++) {
-        var p = document.createElement('p');
-        p.className = 'para';
-        p.textContent = (i + 1) + '. ' + lines[i % lines.length];
-        body.appendChild(p);
-      }
-    });
-  }
-
+  btns.forEach(function (b) { b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); }); });
   render();
-  fillPages();
-  select(0, false);
 })();
 </script>
 </body>
