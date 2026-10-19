@@ -39,7 +39,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
 .cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 .sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
-.scroll-area { height: 300px; overflow-y: auto; border-radius: 24px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px; overscroll-behavior: contain; }
+.scroll-area { height: 300px; overflow-y: auto; border-radius: 24px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px 18px 90px; overscroll-behavior: contain; }
+.scroll-area .para { font-size: 14px; color: var(--text-2); line-height: 1.9; margin-bottom: 18px; }
 .para { font-size: 14px; color: var(--text-2); line-height: 1.9; margin-bottom: 18px; }
 .page-panel { margin-top: 16px; border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 18px 20px; }
 .page-panel .pn { font-size: 18px; font-weight: 700; }
@@ -83,12 +84,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   <div class="sec-title" id="secTitle">组合件：悬浮导航栏（原子拼装）</div>
 
   <div class="scroll-area" id="scrollArea">
-    <p class="para" id="p1">示例内容 · 向下滚动，配合滚动折叠层。</p>
-    <p class="para" id="p2">示例内容 · 继续向下。</p>
-    <p class="para" id="p3">示例内容 · 导航栏下滑隐藏、上滑展开。</p>
-    <p class="para" id="p4">示例内容 · 拖动指示器切换页面。</p>
-    <p class="para" id="p5">示例内容 · 底部开关可实时启停每个原子层。</p>
-    <p class="para" id="p6">示例内容 · 末尾。</p>
+    <div id="scrollContent"></div>
   </div>
 
   <div class="page-panel">
@@ -151,7 +147,19 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
   var navLabels = Array.prototype.slice.call(document.querySelectorAll('.nav-label'));
   var pgLabels = Array.prototype.slice.call(document.querySelectorAll('.pg-label'));
-  var paras = Array.prototype.slice.call(document.querySelectorAll('.para'));
+  var scrollContent = document.getElementById('scrollContent');
+
+  // 生成足够多占位段落，确保滚动区可滚动，折叠层才会触发
+  function fillContent() {
+    var d = I18N[lang];
+    scrollContent.innerHTML = '';
+    for (var i = 0; i < 18; i++) {
+      var p = document.createElement('p');
+      p.className = 'para';
+      p.textContent = (i + 1) + '. ' + d.p[i % d.p.length];
+      scrollContent.appendChild(p);
+    }
+  }
 
   /* 功能层开关（四个全部真实生效） */
   var feats = { floating: true, glass: true, drag: true, scrollHide: true };
@@ -266,7 +274,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     document.getElementById('l4').innerHTML = d.l4 + ' <small>EGDScrollHide</small>';
     navLabels.forEach(function (el) { el.textContent = d.pgLabel; });
     pgLabels.forEach(function (el) { el.textContent = d.pgLabel; });
-    paras.forEach(function (el, i) { el.textContent = d.p[i]; });
+    fillContent();
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
   }

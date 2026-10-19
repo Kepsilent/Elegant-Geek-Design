@@ -39,10 +39,11 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
 .cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 .sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
-.scroll-stage { height: 340px; overflow-y: auto; border-radius: 24px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px; overscroll-behavior: contain; }
+.scroll-stage { position: relative; height: 360px; overflow-y: auto; border-radius: 24px; background: #F5F5F7; border: 0.5px solid #E5E5EA; overscroll-behavior: contain; }
+.content { padding: 18px 18px 90px; }
 .para { font-size: 14px; color: var(--text-2); line-height: 1.9; margin-bottom: 18px; }
-.hide-target { position: sticky; bottom: 0; margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 18px; background: #FFFFFF; border: 2px dashed var(--accent); font-size: 13px; font-weight: 700; color: var(--accent-text); transition: transform 300ms ease-out, opacity 300ms ease-out; }
-.hide-target.hidden { transform: translateY(160%); opacity: 0; }
+.hide-target { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 18px; background: #FFFFFF; border: 2px dashed var(--accent); font-size: 13px; font-weight: 700; color: var(--accent-text); box-shadow: 0 6px 20px rgba(0,0,0,0.10); transition: transform 300ms ease-out, opacity 300ms ease-out; }
+.hide-target.hidden { transform: translateY(180%); opacity: 0; }
 .hide-target svg { width: 18px; height: 18px; }
 </style>
 </head>
@@ -60,12 +61,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
 
   <div class="sec-title" id="secTitle">滚动折叠 · 下滑隐藏 / 上滑展开</div>
   <div class="scroll-stage" id="scrollStage">
-    <p class="para" id="p1">示例内容 · 向下滚动。</p>
-    <p class="para" id="p2">示例内容 · 继续向下。</p>
-    <p class="para" id="p3">示例内容 · 再向下滑，观察底部条隐藏。</p>
-    <p class="para" id="p4">示例内容 · 向上回滚，底部条重新展开。</p>
-    <p class="para" id="p5">示例内容 · 阈值可调、方向可控、状态可回调。</p>
-    <p class="para" id="p6">示例内容 · 末尾。</p>
+    <div class="content" id="content"></div>
     <div class="hide-target" id="hideTarget">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
       <span id="htLabel">滚动折叠目标</span>
@@ -83,7 +79,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
       clItems: ['滚动折叠原子件 v1.0「折叠独立」：上下滑动浏览内容时隐藏/展开，阈值可调，状态回调'],
       secTitle: '滚动折叠 · 下滑隐藏 / 上滑展开',
       htLabel: '滚动折叠目标',
-      p: ['示例内容 · 向下滚动。', '示例内容 · 继续向下。', '示例内容 · 再向下滑，观察底部条隐藏。', '示例内容 · 向上回滚，底部条重新展开。', '示例内容 · 阈值可调、方向可控、状态可回调。', '示例内容 · 末尾。']
+      lines: ['示例内容 · 向下滚动。', '示例内容 · 继续向下。', '示例内容 · 再向下滑，底部条收起。', '示例内容 · 向上回滚，底部条重新展开。', '示例内容 · 阈值可调、方向可控、状态可回调。']
     },
     en: {
       clTitle: 'CHANGELOG',
@@ -91,15 +87,27 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
       clItems: ['Scroll-hide atom v1.0 "Collapse Standalone": hide/expand on content scroll, adjustable threshold, state callback'],
       secTitle: 'Scroll Hide · hide on scroll down / show on scroll up',
       htLabel: 'Scroll-hide target',
-      p: ['Sample content · scroll down.', 'Sample content · keep going down.', 'Sample content · scroll further, watch the bar hide.', 'Sample content · scroll back up, the bar returns.', 'Sample content · adjustable threshold, direction, state callback.', 'Sample content · end.']
+      lines: ['Sample content · scroll down.', 'Sample content · keep going down.', 'Sample content · scroll further, the bar collapses.', 'Sample content · scroll back up, the bar returns.', 'Sample content · adjustable threshold, direction, state callback.']
     }
   };
   var lang = 'zh';
   var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
   var stage = document.getElementById('scrollStage');
   var target = document.getElementById('hideTarget');
+  var content = document.getElementById('content');
   var lastOffset = 0, accumulated = 0, isHidden = false;
-  var paras = Array.prototype.slice.call(document.querySelectorAll('.para'));
+
+  // 生成足够多的占位段落，确保内容超出可视区、可以滚动
+  function fillContent() {
+    var d = I18N[lang];
+    content.innerHTML = '';
+    for (var i = 0; i < 18; i++) {
+      var p = document.createElement('p');
+      p.className = 'para';
+      p.textContent = (i + 1) + '. ' + d.lines[i % d.lines.length];
+      content.appendChild(p);
+    }
+  }
 
   stage.addEventListener('scroll', function () {
     var now = stage.scrollTop;
@@ -124,9 +132,9 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
     document.getElementById('secTitle').textContent = d.secTitle;
     document.getElementById('htLabel').textContent = d.htLabel;
-    paras.forEach(function (el, i) { el.textContent = d.p[i]; });
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+    fillContent();
   }
   btns.forEach(function (b) {
     b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); });
