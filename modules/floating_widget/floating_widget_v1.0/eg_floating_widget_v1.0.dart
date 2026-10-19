@@ -1,7 +1,6 @@
-// eg_floating_widget v1.0 · 2026-10-13
-// EGD 原子控件：悬浮控件（只管悬浮定位，不管材质/手势）
-// 装饰器式：EGDFloatingWidget(child: ...) 包任意内容
-// 特性：悬浮定位（底部居中/角落）· 边距 · 层级 · 保持浮层
+// eg_floating_widget v1.0 · EGD 原子控件：悬浮控件（只管悬浮定位，不管材质/手势）
+// 装饰器式：EGDFloatingWidget(position: ..., offset: ..., child: ...) 包任意内容
+// 特性：悬浮定位（底部居中/角落/顶部）· 边距 · 保持浮层
 import 'package:flutter/material.dart';
 
 /// 悬浮位置
@@ -25,15 +24,11 @@ class EGDFloatingWidget extends StatelessWidget {
   /// 边距（相对屏幕边缘）
   final EdgeInsets offset;
 
-  /// 层级
-  final int zIndex;
-
   const EGDFloatingWidget({
     super.key,
     required this.child,
     this.position = FloatingPosition.bottomCenter,
     this.offset = const EdgeInsets.only(bottom: 16),
-    this.zIndex = 100,
   });
 
   Alignment _align() => switch (position) {
@@ -47,22 +42,9 @@ class EGDFloatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Align(
       alignment: _align(),
-      children: [
-        Positioned.fill(
-          child: IgnorePointer(
-            child: ColoredBox(color: Colors.transparent),
-          ),
-        ),
-        Align(
-          alignment: _align(),
-          child: Padding(
-            padding: offset,
-            child: child,
-          ),
-        ),
-      ],
+      child: Padding(padding: offset, child: child),
     );
   }
 }

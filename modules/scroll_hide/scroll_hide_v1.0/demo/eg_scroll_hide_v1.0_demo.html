@@ -27,10 +27,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .wrap { max-width: 520px; margin: 0 auto; padding: 24px 20px 20px; }
-.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
 .lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
 .lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
-.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
 .cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
 .cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
 .cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
@@ -39,27 +39,11 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
 .cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 .sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
-.tip { font-size: 12.5px; color: var(--text-3); margin-bottom: 14px; }
-/* 滚动舞台 */
-.scroll-stage {
-  height: 340px; overflow-y: auto; border-radius: 24px;
-  background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px;
-  overscroll-behavior: contain;
-}
+.scroll-stage { height: 340px; overflow-y: auto; border-radius: 24px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px; overscroll-behavior: contain; }
 .para { font-size: 14px; color: var(--text-2); line-height: 1.9; margin-bottom: 18px; }
-/* 被折叠对象：贴底部的内容条（无玻璃无悬浮，只演示折叠行为） */
-.hide-target {
-  position: sticky; bottom: 0; margin-top: 12px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 14px; border-radius: 18px;
-  background: #FFFFFF; border: 2px dashed var(--accent);
-  font-size: 13px; font-weight: 700; color: var(--accent-text);
-  transition: transform 300ms ease-out, opacity 300ms ease-out;
-}
+.hide-target { position: sticky; bottom: 0; margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 18px; background: #FFFFFF; border: 2px dashed var(--accent); font-size: 13px; font-weight: 700; color: var(--accent-text); transition: transform 300ms ease-out, opacity 300ms ease-out; }
 .hide-target.hidden { transform: translateY(160%); opacity: 0; }
 .hide-target svg { width: 18px; height: 18px; }
-.status { margin-top: 14px; text-align: center; font-size: 13px; color: var(--text-2); }
-.status b { color: var(--accent-text); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -75,20 +59,18 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   </section>
 
   <div class="sec-title" id="secTitle">滚动折叠 · 下滑隐藏 / 上滑展开</div>
-  <div class="tip" id="secTip">在下方内容区上下滑动：向下滚动内容 → 底部条隐藏；向上回滚 → 底部条展开。</div>
   <div class="scroll-stage" id="scrollStage">
-    <p class="para">极简 · 液态玻璃 · 纯白/纯黑 · 霞鹜文楷 · Lucide。</p>
-    <p class="para">EGD 是一套跨平台自适应设计系统（Flutter 优先，Android / iOS / Web / 桌面）。纯白为底、玻璃为质、翠绿为魂——优雅与极客的平衡。</p>
-    <p class="para">背景浅色纯白 #FFFFFF、夜间纯黑 #000000，不依赖彩色 / 渐变背景。液态玻璃为默认容器材质，能玻璃化的都玻璃化。</p>
-    <p class="para">文字层用霞鹜文楷（OFL 1.1 可商用）；图标层用 Lucide（ISC）+ SVG 实现；禁用 emoji、icon font、PNG 图标。</p>
-    <p class="para">对比度：正文 ≥ 4.5:1，大字 ≥ 3:1（WCAG 2.2 AA）。强调色为签名绿 #00C48C（深色 #00D494）。</p>
-    <p class="para">继续向下滚动，观察底部条隐藏；向上滚动，底部条重新出现。阈值可调、方向可控、状态可回调。</p>
+    <p class="para" id="p1">示例内容 · 向下滚动。</p>
+    <p class="para" id="p2">示例内容 · 继续向下。</p>
+    <p class="para" id="p3">示例内容 · 再向下滑，观察底部条隐藏。</p>
+    <p class="para" id="p4">示例内容 · 向上回滚，底部条重新展开。</p>
+    <p class="para" id="p5">示例内容 · 阈值可调、方向可控、状态可回调。</p>
+    <p class="para" id="p6">示例内容 · 末尾。</p>
     <div class="hide-target" id="hideTarget">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      <span id="htLabel">滚动折叠目标（下滑隐藏）</span>
+      <span id="htLabel">滚动折叠目标</span>
     </div>
   </div>
-  <div class="status" id="status">状态：<b id="statusState">展开</b></div>
 </main>
 
 <script>
@@ -98,20 +80,18 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     zh: {
       clTitle: '更新日志 CHANGELOG',
       clVer: 'v1.0 <span class="tag">折叠独立</span><span class="cl-date">2026-10-13</span>',
-      clItems: ['滚动折叠原子件：上下滑动浏览内容时隐藏/展开', '方向控制（下滑隐藏）/ 阈值可调 / 状态回调'],
+      clItems: ['滚动折叠原子件 v1.0「折叠独立」：上下滑动浏览内容时隐藏/展开，阈值可调，状态回调'],
       secTitle: '滚动折叠 · 下滑隐藏 / 上滑展开',
-      secTip: '在下方内容区上下滑动：向下滚动内容 → 底部条隐藏；向上回滚 → 底部条展开。',
-      htLabel: '滚动折叠目标（下滑隐藏）', shown: '展开', hidden: '已隐藏',
-      state: '状态：'
+      htLabel: '滚动折叠目标',
+      p: ['示例内容 · 向下滚动。', '示例内容 · 继续向下。', '示例内容 · 再向下滑，观察底部条隐藏。', '示例内容 · 向上回滚，底部条重新展开。', '示例内容 · 阈值可调、方向可控、状态可回调。', '示例内容 · 末尾。']
     },
     en: {
       clTitle: 'CHANGELOG',
       clVer: 'v1.0 <span class="tag">Collapse Standalone</span><span class="cl-date">2026-10-13</span>',
-      clItems: ['Scroll-hide atom: hide/expand while scrolling content', 'Direction control (hide on scroll down) / adjustable threshold / state callback'],
+      clItems: ['Scroll-hide atom v1.0 "Collapse Standalone": hide/expand on content scroll, adjustable threshold, state callback'],
       secTitle: 'Scroll Hide · hide on scroll down / show on scroll up',
-      secTip: 'Scroll the content area: scroll down → bar hides; scroll up → bar expands.',
-      htLabel: 'Scroll-hide target (hides on scroll down)', shown: 'shown', hidden: 'hidden',
-      state: 'State: '
+      htLabel: 'Scroll-hide target',
+      p: ['Sample content · scroll down.', 'Sample content · keep going down.', 'Sample content · scroll further, watch the bar hide.', 'Sample content · scroll back up, the bar returns.', 'Sample content · adjustable threshold, direction, state callback.', 'Sample content · end.']
     }
   };
   var lang = 'zh';
@@ -119,6 +99,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   var stage = document.getElementById('scrollStage');
   var target = document.getElementById('hideTarget');
   var lastOffset = 0, accumulated = 0, isHidden = false;
+  var paras = Array.prototype.slice.call(document.querySelectorAll('.para'));
 
   stage.addEventListener('scroll', function () {
     var now = stage.scrollTop;
@@ -135,7 +116,6 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   function setHidden(v) {
     isHidden = v;
     target.classList.toggle('hidden', v);
-    render();
   }
   function render() {
     var d = I18N[lang];
@@ -143,10 +123,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     document.getElementById('clVer').innerHTML = d.clVer;
     document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
     document.getElementById('secTitle').textContent = d.secTitle;
-    document.getElementById('secTip').textContent = d.secTip;
     document.getElementById('htLabel').textContent = d.htLabel;
-    document.getElementById('statusState').textContent = isHidden ? d.hidden : d.shown;
-    document.getElementById('status').innerHTML = d.state + '<b>' + (isHidden ? d.hidden : d.shown) + '</b>';
+    paras.forEach(function (el, i) { el.textContent = d.p[i]; });
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
   }

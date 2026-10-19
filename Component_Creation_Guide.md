@@ -121,7 +121,7 @@ modules/
 1. 装配便携包（内部含：EGD 核心文档中英 + changelog.json + EGD 本体 + 全部自有模块 + 第三方 assets），目录命名 `Elegant_Geek_Design_v<版本>/`。
 2. 压缩为单个便携 zip：`Elegant_Geek_Design_v<版本>.zip`（一键解压即用）。
 3. Release 只上传**这一个便携 zip**；README / agents 等门面文件不入 Release。
-4. 发布规范详见 GitHub Wiki（经 `agents.md` 引导 AI 访问）。
+4. 发布规范为内部本地文件 `RELEASE_GUIDE.md`（已 gitignore，不进仓库、不公开），发布时按该手册执行。
 
 ---
 

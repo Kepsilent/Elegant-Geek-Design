@@ -17,7 +17,7 @@
   2. **Floating Nav 悬浮导航**：组合件 = 悬浮 + 玻璃 + 拖动 + 滚动折叠 + 功能开关 → `modules/floating_nav_bar/`
   3. **图标 Lucide**：官方图标库，全部 SVG 实现，禁 emoji → `assets/icons/lucide/`
   4. **字体 霞鹜文楷**：全层级唯一设计字体，OFL 1.1 可商用 → `assets/fonts/lxgw-wenkai/`
-- **本体代码**：`EGD/EGD_v1.1/EGD_v1.1.dart`（设计系统核心 Tokens：色板 / 玻璃 / 间距圆角 / 字号）
+- **本体代码**：`EGD/EGD_v1.1/EGD_v1.1.dart`（核心 Tokens：玻璃 / 间距圆角 / 字号；色板唯一源在 `modules/color/`，本体不重复定义色值）
 - **基地演示**：`EGD/EGD_v1.1/demo/EGD_v1.1_demo.html`（单文件，页面内中/英切换）
 
 ---
@@ -97,11 +97,11 @@ EGD 色板纯代码模块。提供签名绿系、中性色系、玻璃色系的�
 
 #### drag_swipe（滑动交互）
 
-只负责手势：拖动跟手 / 拖动中放大 / 松手弹性吸附 / 点击判定 / 边界橡皮筋。使用：`EGDDragSwipe(itemCount: n, onSelect: ..., child: ...)`。
+只负责手势：拖动跟手 / 拖动中放大 / 松手弹性吸附 / 点击判定 / 边界橡皮筋；`slotWidth`（槽位宽）由调用方传入，`onIndexChange` 上报实时最近位、`onSelect` 上报松手或点击最终位，atom 只识别手势、不自带视觉。使用：`EGDDragSwipe(itemCount: n, slotWidth: 60, onIndexChange: ..., onSelect: ..., child: ...)`。
 
 #### floating_widget（悬浮控件）
 
-只负责悬浮：悬浮定位（底部/角落/居中）/ 边距 / 层级，保持浮层。不带玻璃、不带手势——纯悬浮骨架。使用：`EGDFloatingWidget(position: ..., child: ...)`。
+只负责悬浮：悬浮定位（底部/角落/居中，`FloatingPosition` 六向枚举）/ 边距偏移，保持浮层。不带玻璃、不带手势——纯悬浮骨架。使用：`EGDFloatingWidget(position: ..., offset: ..., child: ...)`。
 
 #### scroll_hide（滚动折叠）
 
@@ -109,18 +109,23 @@ EGD 色板纯代码模块。提供签名绿系、中性色系、玻璃色系的�
 
 #### toggle（功能开关）
 
-只负责开关：ValueNotifier 运行期开关，**关闭 = 被控内容不渲染（零资源开销）**，可带可视化开关按钮。使用：`EGDToggle(enabled: notifier, child: ...)`。
+只负责开关：ValueNotifier 运行期开关，**关闭 = 被控内容移出渲染树（零资源开销），开关本体常驻、可随时点回**，可带可视化开关按钮。使用：`EGDToggle(enabled: notifier, showSwitch: true, child: ...)`。
 
 ### 组合控件层（在原子件上搭，只装配不写新逻辑）
 
 #### floating_nav_bar（悬浮导航栏）
 
-组合件 = `EGDFloatingWidget` + `EGDLiquidGlass` + `EGDDragSwipe` + `EGDScrollHide`（可选）+ 配置开关。方圆形指示器严格居中、跟手拖动（指示器中心跟手）、拖动放大、松手弹性吸附、点击切换；滚动折叠与各功能层可经 `FloatingNavConfig` 独立启用 / 禁用（关闭 = 该层不进渲染树）。使用：
+组合件 = `EGDFloatingWidget` + `EGDLiquidGlass` + `EGDDragSwipe` + `EGDScrollHide`（可选）+ 配置开关。方圆形指示器严格居中、跟手拖动（指示器中心跟手）、拖动放大、松手弹性吸附、点击切换；**选中态受控**——`selectedIndex` / `onIndexChanged` 由外部持有，组合件不自管状态机；滚动折叠与各功能层可经 `FloatingNavConfig` 独立启用 / 禁用（关闭 = 该层不进渲染树）。使用：
 
 ```dart
 EGDFloatingNavBar(
   tabs: tabs,
-  config: FloatingNavConfig(glass: true, drag: true, floating: true, scrollHide: true),
+  selectedIndex: index,
+  onIndexChanged: (i) => setState(() => index = i),
+  scrollController: scrollController,
+  config: const FloatingNavConfig(
+    glass: true, drag: true, floating: true, scrollHide: true,
+  ),
 )
 ```
 

@@ -17,7 +17,7 @@
   2. **Floating Nav**: composite = floating + glass + drag + scroll-hide + feature toggles → `modules/floating_nav_bar/`
   3. **Icons (Lucide)**: official icon library, all SVG, emoji banned → `assets/icons/lucide/`
   4. **Font (LXGW WenKai)**: the only design font at every level, OFL 1.1, free for commercial use → `assets/fonts/lxgw-wenkai/`
-- **Core code**: `EGD/EGD_v1.1/EGD_v1.1.dart` (design-system core tokens: color / glass / spacing-radius / type)
+- **Core code**: `EGD/EGD_v1.1/EGD_v1.1.dart` (core tokens: glass / spacing-radius / type; the single color source lives in `modules/color/`, the core defines no color values)
 - **Showcase demo**: `EGD/EGD_v1.1/demo/EGD_v1.1_demo.html` (single file, in-page ZH/EN switch)
 
 ---
@@ -97,11 +97,11 @@ Material only: blur / dual highlight / top edge / refraction / light-dark themes
 
 #### drag_swipe
 
-Gestures only: drag-follow / press scale / elastic snap / tap detection / boundary bounce. Usage: `EGDDragSwipe(itemCount: n, onSelect: ..., child: ...)`.
+Gestures only: drag-follow / press scale / elastic snap / tap detection / boundary bounce; `slotWidth` (slot width) is passed by the caller, `onIndexChange` reports the live nearest slot, `onSelect` reports the final slot on release or tap; the atom only recognizes gestures and ships no visuals. Usage: `EGDDragSwipe(itemCount: n, slotWidth: 60, onIndexChange: ..., onSelect: ..., child: ...)`.
 
 #### floating_widget
 
-Floating only: floating position (bottom / corner / center) / offset / z-index, keeps overlay. No glass, no gestures — pure floating skeleton. Usage: `EGDFloatingWidget(position: ..., child: ...)`.
+Floating only: floating position (six-way `FloatingPosition` enum: bottom / corner / center) / offset, keeps overlay. No glass, no gestures — pure floating skeleton. Usage: `EGDFloatingWidget(position: ..., offset: ..., child: ...)`.
 
 #### scroll_hide
 
@@ -109,18 +109,23 @@ Collapse only: hide/expand while scrolling content, direction control, adjustabl
 
 #### toggle
 
-Switch only: runtime ValueNotifier switch, **off = controlled content not rendered (zero cost)**, optional visible switch UI. Usage: `EGDToggle(enabled: notifier, child: ...)`.
+Switch only: runtime ValueNotifier switch, **off = controlled content leaves the render tree (zero cost); the switch body stays mounted and can be tapped back on**, optional visible switch UI. Usage: `EGDToggle(enabled: notifier, showSwitch: true, child: ...)`.
 
 ### Composite layer (built on atoms, assembly only)
 
 #### floating_nav_bar
 
-Composite = `EGDFloatingWidget` + `EGDLiquidGlass` + `EGDDragSwipe` + `EGDScrollHide` (optional) + config toggles. Squircle indicator strictly centered, drag-follow (indicator center follows finger), press scale, elastic snap, tap-to-switch; scroll-hide and each feature layer independently togglable via `FloatingNavConfig` (off = layer not in the render tree). Usage:
+Composite = `EGDFloatingWidget` + `EGDLiquidGlass` + `EGDDragSwipe` + `EGDScrollHide` (optional) + config toggles. Squircle indicator strictly centered, drag-follow (indicator center follows finger), press scale, elastic snap, tap-to-switch; **controlled selection** — `selectedIndex` / `onIndexChanged` are held by the host, the composite owns no state machine; scroll-hide and each feature layer independently togglable via `FloatingNavConfig` (off = layer not in the render tree). Usage:
 
 ```dart
 EGDFloatingNavBar(
   tabs: tabs,
-  config: FloatingNavConfig(glass: true, drag: true, floating: true, scrollHide: true),
+  selectedIndex: index,
+  onIndexChanged: (i) => setState(() => index = i),
+  scrollController: scrollController,
+  config: const FloatingNavConfig(
+    glass: true, drag: true, floating: true, scrollHide: true,
+  ),
 )
 ```
 

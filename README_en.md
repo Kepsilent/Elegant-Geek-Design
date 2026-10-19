@@ -24,22 +24,24 @@ EGD is a cross-platform adaptive design system: **atom layer (base primitives) â
 **For AI agents, see [agents.md](agents.md).**
 
 - **Portable bundle** (recommended): grab the latest `Elegant_Geek_Design_v<version>.zip` from **[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)** â€” unzip once and use: core docs (ZH/EN) + all modules (dart + changelog + demo) + third-party assets (LXGW WenKai / Lucide, original licenses included)
-- **Preview individually**: open any demo below (single file, in-page ZH/EN switch); component sources and the design spec live in the matching directories
+- **Live preview**: click any demo below to open it in the browser (GitHub Pages, in-page ZH/EN switch); component sources and the design spec live in the matching directories
 
 ## Component Showcase (Demo Previews)
 
-| Module | Version | Demo Preview | Source |
-| --- | --- | --- | --- |
-| Base showcase EGD | v1.1 | [EGD_v1.1_demo.html](EGD/EGD_v1.1/demo/EGD_v1.1_demo.html) | [EGD_v1.1.dart](EGD/EGD_v1.1/EGD_v1.1.dart) |
-| color | v1.0 | [eg_color_v1.0_demo.html](modules/color/color_v1.0/demo/eg_color_v1.0_demo.html) | [eg_color_v1.0.dart](modules/color/color_v1.0/eg_color_v1.0.dart) |
-| liquid_glass | v1.0 | [eg_liquid_glass_v1.0_demo.html](modules/liquid_glass/liquid_glass_v1.0/demo/eg_liquid_glass_v1.0_demo.html) | [eg_liquid_glass_v1.0.dart](modules/liquid_glass/liquid_glass_v1.0/eg_liquid_glass_v1.0.dart) |
-| drag_swipe | v1.0 | [eg_drag_swipe_v1.0_demo.html](modules/drag_swipe/drag_swipe_v1.0/demo/eg_drag_swipe_v1.0_demo.html) | [eg_drag_swipe_v1.0.dart](modules/drag_swipe/drag_swipe_v1.0/eg_drag_swipe_v1.0.dart) |
-| floating_widget | v1.0 | [eg_floating_widget_v1.0_demo.html](modules/floating_widget/floating_widget_v1.0/demo/eg_floating_widget_v1.0_demo.html) | [eg_floating_widget_v1.0.dart](modules/floating_widget/floating_widget_v1.0/eg_floating_widget_v1.0.dart) |
-| scroll_hide | v1.0 | [eg_scroll_hide_v1.0_demo.html](modules/scroll_hide/scroll_hide_v1.0/demo/eg_scroll_hide_v1.0_demo.html) | [eg_scroll_hide_v1.0.dart](modules/scroll_hide/scroll_hide_v1.0/eg_scroll_hide_v1.0.dart) |
-| toggle | v1.0 | [eg_toggle_v1.0_demo.html](modules/toggle/toggle_v1.0/demo/eg_toggle_v1.0_demo.html) | [eg_toggle_v1.0.dart](modules/toggle/toggle_v1.0/eg_toggle_v1.0.dart) |
-| floating_nav_bar | v1.0 | [eg_floating_nav_bar_v1.0_demo.html](modules/floating_nav_bar/floating_nav_bar_v1.0/demo/eg_floating_nav_bar_v1.0_demo.html) | [eg_floating_nav_bar_v1.0.dart](modules/floating_nav_bar/floating_nav_bar_v1.0/eg_floating_nav_bar_v1.0.dart) |
+Live previews are served by GitHub Pages and render on click; the source column links to files in the repo.
 
-> Note: for the full font rendering, download the portable bundle (includes the LXGW WenKai ttf); previewing in the repo falls back to system fonts, interactions unaffected.
+| Module | Layer | Version | Live Preview | Source |
+| --- | --- | --- | --- | --- |
+| Base showcase EGD | Core | v1.1 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/EGD/EGD_v1.1/demo/EGD_v1.1_demo.html) | [EGD_v1.1.dart](EGD/EGD_v1.1/EGD_v1.1.dart) |
+| color | Atom | v1.0 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/modules/color/color_v1.0/demo/eg_color_v1.0_demo.html) | [eg_color_v1.0.dart](modules/color/color_v1.0/eg_color_v1.0.dart) |
+| liquid_glass | Atom | v1.0 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/modules/liquid_glass/liquid_glass_v1.0/demo/eg_liquid_glass_v1.0_demo.html) | [eg_liquid_glass_v1.0.dart](modules/liquid_glass/liquid_glass_v1.0/eg_liquid_glass_v1.0.dart) |
+| drag_swipe | Atom | v1.0 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/modules/drag_swipe/drag_swipe_v1.0/demo/eg_drag_swipe_v1.0_demo.html) | [eg_drag_swipe_v1.0.dart](modules/drag_swipe/drag_swipe_v1.0/eg_drag_swipe_v1.0.dart) |
+| floating_widget | Atom | v1.0 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/modules/floating_widget/floating_widget_v1.0/demo/eg_floating_widget_v1.0_demo.html) | [eg_floating_widget_v1.0.dart](modules/floating_widget/floating_widget_v1.0/eg_floating_widget_v1.0.dart) |
+| scroll_hide | Atom | v1.0 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/modules/scroll_hide/scroll_hide_v1.0/demo/eg_scroll_hide_v1.0_demo.html) | [eg_scroll_hide_v1.0.dart](modules/scroll_hide/scroll_hide_v1.0/eg_scroll_hide_v1.0.dart) |
+| toggle | Atom | v1.0 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/modules/toggle/toggle_v1.0/demo/eg_toggle_v1.0_demo.html) | [eg_toggle_v1.0.dart](modules/toggle/toggle_v1.0/eg_toggle_v1.0.dart) |
+| floating_nav_bar | Composite | v1.0 | [Live preview](https://kepsilent.github.io/Elegant-Geek-Design/modules/floating_nav_bar/floating_nav_bar_v1.0/demo/eg_floating_nav_bar_v1.0_demo.html) | [eg_floating_nav_bar_v1.0.dart](modules/floating_nav_bar/floating_nav_bar_v1.0/eg_floating_nav_bar_v1.0.dart) |
+
+> Note: for the full font rendering, download the portable bundle (includes the LXGW WenKai ttf); Pages preview falls back to system fonts, interactions unaffected.
 
 ## Iron Rules
 

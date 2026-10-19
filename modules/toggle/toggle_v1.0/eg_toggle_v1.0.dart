@@ -1,7 +1,6 @@
-// eg_toggle v1.0 · 2026-10-13
-// EGD 原子控件：功能开关（只管开关状态与可视化切换，不管被控内容）
-// 装饰器式：EGDToggle(child: ..., enabled: ValueNotifier<bool>) 包任意内容
-// 特性：开关状态（ValueNotifier 运行期可切）· 可视化开关按钮 · 关闭 = 不渲染被控内容（零开销）
+// eg_toggle v1.0 · EGD 原子控件：功能开关（只管开关状态与切换，不管被控内容自身）
+// 装饰器式：EGDToggle(enabled: ValueNotifier<bool>, child: ...) 包任意内容
+// 特性：开关状态（ValueNotifier 运行期可切）· 关闭 = 被控内容不渲染（零开销）· 开关本体常驻可点
 import 'package:flutter/material.dart';
 
 /// 功能开关原子件 —— 控制任意功能的启用/禁用。
@@ -11,7 +10,7 @@ import 'package:flutter/material.dart';
 /// final notifier = ValueNotifier<bool>(true);
 /// EGDToggle(enabled: notifier, child: myFeature);
 /// // 外部任意位置：
-/// notifier.value = false; // 立即禁用，myFeature 不进渲染树（零开销）
+/// notifier.value = false; // 立即禁用，myFeature 不进渲染树（零开销）；开关按钮仍可点回
 /// ```
 class EGDToggle extends StatelessWidget {
   /// 被开关控制的内容
@@ -43,14 +42,11 @@ class EGDToggle extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: enabled,
       builder: (context, on, _) {
-        if (!on) {
-          // 关闭：被控内容不渲染，零资源开销
-          return const SizedBox.shrink();
-        }
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            child,
+            // 关闭：被控内容不渲染，零资源开销；开关本体仍常驻
+            if (on) child,
             if (showSwitch)
               GestureDetector(
                 onTap: () {

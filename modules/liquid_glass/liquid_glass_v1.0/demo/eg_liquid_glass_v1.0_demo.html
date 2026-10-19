@@ -27,10 +27,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .wrap { max-width: 520px; margin: 0 auto; padding: 24px 20px 60px; }
-.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
 .lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
 .lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
-.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
 .cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
 .cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
 .cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
@@ -40,14 +40,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 .sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
 .glass-demo { display: flex; flex-wrap: wrap; gap: 16px; }
-.g-card {
-  flex: 1; min-width: 180px; padding: 20px; border-radius: 24px;
-  background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-shadow), var(--glass-highlight);
-  position: relative; overflow: hidden;
-}
+.g-card { flex: 1; min-width: 180px; padding: 20px; border-radius: 24px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); position: relative; overflow: hidden; }
 .g-card::before { content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent); border-radius: 24px 24px 0 0; pointer-events: none; }
 .g-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
 .g-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
@@ -102,7 +95,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     zh: {
       clTitle: '更新日志 CHANGELOG',
       clVer: 'v1.0 <span class="tag">材质独立</span><span class="cl-date">2026-10-13</span>',
-      clItems: ['液态玻璃折射原子件：blur 模糊 / 双峰高光 / 顶部亮边 / 折射 / 深浅双主题', '可贴任意控件：卡片 / 按钮 / 导航栏 / sheet'],
+      clItems: ['液态玻璃折射原子件 v1.0「材质独立」：blur 模糊 / 双峰高光 / 顶部亮边 / 折射 / 深浅双主题，可贴任意控件'],
       sec1: '液态玻璃折射 · 可贴任意控件', sec2: '对照：无玻璃的普通卡片',
       c1t: '玻璃卡片', c1p: 'blur 24 · 双峰高光 · 顶部亮边 · 圆角 24', c1b: '玻璃按钮',
       c2t: '玻璃容器', c2p: '半透明底 · 折射边框 · 浮起阴影', c2c1: '玻璃胶囊', c2c2: '玻璃徽章',
@@ -111,7 +104,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     en: {
       clTitle: 'CHANGELOG',
       clVer: 'v1.0 <span class="tag">Material Standalone</span><span class="cl-date">2026-10-13</span>',
-      clItems: ['Liquid-glass refraction atom: blur / dual highlight / top edge / refraction / light-dark themes', 'Wraps any widget: cards / buttons / nav bars / sheets'],
+      clItems: ['Liquid-glass refraction atom v1.0 "Material Standalone": blur / dual highlight / top edge / refraction / light-dark themes, wraps any widget'],
       sec1: 'Liquid Glass · wraps any widget', sec2: 'Control: plain card without glass',
       c1t: 'Glass Card', c1p: 'blur 24 · dual highlight · top edge · radius 24', c1b: 'Glass Button',
       c2t: 'Glass Container', c2p: 'translucent base · refraction border · floating shadow', c2c1: 'Glass Chip', c2c2: 'Glass Badge',

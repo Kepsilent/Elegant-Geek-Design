@@ -11,6 +11,7 @@
   - 本体 Tokens：[EGD/EGD_v1.1/EGD_v1.1.dart](EGD/EGD_v1.1/EGD_v1.1.dart)
   - 全部组件：`modules/<模块>/<模块>_v<版本>/`（原子件 + 组合件，各含 `eg_*_v<版本>.dart` + 双语 changelog + `demo/`）
 - **完整便携包**（含第三方资源，供运行 demo 与直接使用）：**[Releases](https://github.com/Kepsilent/Elegant-Geek-Design/releases)** 下载最新 `Elegant_Geek_Design_v<版本>.zip`
+- **在线预览**（GitHub Pages，无需下载）：`https://kepsilent.github.io/Elegant-Geek-Design/<demo 相对路径>`，页面内中/英切换
 
 ## 2. 模块体系
 
@@ -33,7 +34,7 @@
 
 ## 3. 使用方式
 
-1. **预览效果**：浏览器打开 `demo/*.html`（单文件，页面内中/英切换；完整字体需便携包）
+1. **预览效果**：优先用 GitHub Pages 在线打开 `demo/*.html`，也可本地浏览器打开（单文件，页面内中/英切换；完整字体需便携包）
 2. **按规范设计**：以核心文档 `Elegant_Geek_Design.md`（中文）为权威规范——色板、玻璃参数、间距、文字、图标规范全部在其中
 3. **参照 demo 实现**：组件 demo 是效果的权威参照，据此在目标框架（Flutter 等）实现
 4. **组件开发**：新组件按「组件创建手册」（本地 `Component_Creation_Guide.md`）执行命名 / changelog / demo / 迭代规范

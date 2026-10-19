@@ -27,10 +27,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .wrap { max-width: 460px; margin: 0 auto; padding: 24px 20px 140px; }
-.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
 .lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
 .lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
-.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
 .cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
 .cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
 .cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
@@ -39,16 +39,12 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
 .cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 .sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
-.tip { font-size: 12.5px; color: var(--text-3); margin-bottom: 14px; }
-/* 内容区（可滚动，配合滚动折叠） */
 .scroll-area { height: 300px; overflow-y: auto; border-radius: 24px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 18px; overscroll-behavior: contain; }
 .para { font-size: 14px; color: var(--text-2); line-height: 1.9; margin-bottom: 18px; }
-/* 页面示例切换 */
-.page-panel { margin-top: 16px; border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 18px 20px; }
+.page-panel { margin-top: 16px; border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 18px 20px; }
 .page-panel .pn { font-size: 18px; font-weight: 700; }
 .page-panel .pn .ac { color: var(--accent-text); }
 .page-panel .pd { margin-top: 6px; font-size: 13px; color: var(--text-2); }
-/* 开关面板（组合件的功能开关：控制各原子件层启用/禁用） */
 .switch-panel { margin-top: 16px; border-radius: 18px; background: #F5F5F7; border: 0.5px solid #E5E5EA; padding: 8px 16px; }
 .sw-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid rgba(0,0,0,0.06); }
 .sw-row:last-child { border-bottom: none; }
@@ -58,17 +54,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
 .switch.on { background: var(--accent); }
 .switch .knob { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: left 200ms ease; }
 .switch.on .knob { left: 21px; }
-/* 悬浮玻璃导航栏（组合件成品） */
-.float-nav {
-  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-  z-index: 100; padding: 7px; border-radius: 24px;
-  background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--glass-border);
-  box-shadow: var(--glass-shadow), var(--glass-highlight);
-  user-select: none; -webkit-user-select: none; touch-action: none;
-  transition: transform 300ms ease-out, opacity 300ms ease-out;
-}
+.float-nav { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 7px; border-radius: 24px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); user-select: none; -webkit-user-select: none; touch-action: none; transition: transform 300ms ease-out, opacity 300ms ease-out; }
 .float-nav::before { content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent); border-radius: 24px 24px 0 0; pointer-events: none; }
 .float-nav.hide { transform: translate(-50%, 180%); opacity: 0; }
 .float-nav.plain { background: #FFFFFF; box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
@@ -95,15 +81,14 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   </section>
 
   <div class="sec-title" id="secTitle">组合件：悬浮导航栏（原子拼装）</div>
-  <div class="tip" id="secTip">在内容区上下滑动可触发滚动折叠；拖动导航栏指示器可切换页面；下方开关可实时启用/禁用每个原子件层。</div>
 
   <div class="scroll-area" id="scrollArea">
-    <p class="para">极简 · 液态玻璃 · 纯白/纯黑 · 霞鹜文楷 · Lucide。</p>
-    <p class="para">EGD 是一套跨平台自适应设计系统（Flutter 优先，Android / iOS / Web / 桌面）。纯白为底、玻璃为质、翠绿为魂。</p>
-    <p class="para">背景浅色纯白 #FFFFFF、夜间纯黑 #000000。液态玻璃为默认容器材质，能玻璃化的都玻璃化。</p>
-    <p class="para">文字层用霞鹜文楷（OFL 1.1 可商用）；图标层用 Lucide（ISC）+ SVG；禁用 emoji。</p>
-    <p class="para">对比度：正文 ≥ 4.5:1，大字 ≥ 3:1（WCAG 2.2 AA）。强调色 #00C48C。</p>
-    <p class="para">组合件由五个原子件拼装：悬浮 / 玻璃 / 拖动 / 滚动折叠 / 功能开关。</p>
+    <p class="para" id="p1">示例内容 · 向下滚动，配合滚动折叠层。</p>
+    <p class="para" id="p2">示例内容 · 继续向下。</p>
+    <p class="para" id="p3">示例内容 · 导航栏下滑隐藏、上滑展开。</p>
+    <p class="para" id="p4">示例内容 · 拖动指示器切换页面。</p>
+    <p class="para" id="p5">示例内容 · 底部开关可实时启停每个原子层。</p>
+    <p class="para" id="p6">示例内容 · 末尾。</p>
   </div>
 
   <div class="page-panel">
@@ -112,14 +97,13 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   </div>
 
   <div class="switch-panel">
-    <div class="sw-row"><span class="sw-label" id="l1">悬浮层 <small id="l1s">EGDFloatingWidget</small></span><div class="switch on" data-feat="floating"></div></div>
-    <div class="sw-row"><span class="sw-label" id="l2">玻璃层 <small id="l2s">EGDLiquidGlass</small></span><div class="switch on" data-feat="glass"></div></div>
-    <div class="sw-row"><span class="sw-label" id="l3">拖动层 <small id="l3s">EGDDragSwipe</small></span><div class="switch on" data-feat="drag"></div></div>
-    <div class="sw-row"><span class="sw-label" id="l4">滚动折叠 <small id="l4s">EGDScrollHide</small></span><div class="switch on" data-feat="scrollHide"></div></div>
+    <div class="sw-row"><span class="sw-label" id="l1">悬浮层 <small id="l1s">EGDFloatingWidget</small></span><div class="switch on" data-feat="floating"><div class="knob"></div></div></div>
+    <div class="sw-row"><span class="sw-label" id="l2">玻璃层 <small id="l2s">EGDLiquidGlass</small></span><div class="switch on" data-feat="glass"><div class="knob"></div></div></div>
+    <div class="sw-row"><span class="sw-label" id="l3">拖动层 <small id="l3s">EGDDragSwipe</small></span><div class="switch on" data-feat="drag"><div class="knob"></div></div></div>
+    <div class="sw-row"><span class="sw-label" id="l4">滚动折叠 <small id="l4s">EGDScrollHide</small></span><div class="switch on" data-feat="scrollHide"><div class="knob"></div></div></div>
   </div>
 </main>
 
-<!-- 悬浮玻璃导航栏（组合件成品） -->
 <nav class="float-nav" id="floatNav" aria-label="主导航">
   <div class="nav-wrap" id="navWrap">
     <div class="nav-pill" id="navPill"></div>
@@ -138,37 +122,38 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
       clTitle: '更新日志 CHANGELOG',
       clVer: 'v1.0 <span class="tag">原子拼装</span><span class="cl-date">2026-10-13</span>',
       clItems: [
-        '组合件：EGDFloatingWidget + EGDLiquidGlass + EGDDragSwipe + EGDScrollHide + 配置开关',
-        '只装配不写新逻辑；每个功能层可独立启用/禁用（关闭 = 该层不进渲染树）',
-        '拖动跟手 / 放大 1.15× / 松手弹性吸附 / 点击切换 / 滚动折叠'
+        '悬浮导航栏组合件 v1.0「原子拼装」：EGDFloatingWidget + EGDLiquidGlass + EGDDragSwipe + EGDScrollHide（可选）+ 配置开关，只装配不写新逻辑',
+        '由原 floating_nav v1.1「方圆形居中」重构而来：旧模块拆解为原子件，能力全部承接',
+        '继承并保留：4 示例 tab · 方圆形指示器（radius 18px）严格居中 · 跟手拖动（指示器中心跟手）· 拖动放大 1.15× · 松手弹性吸附 · 点击切换 · 边界橡皮筋',
+        '新增：滚动折叠（内容下滑隐藏 / 上滑展开）· 功能开关面板（悬浮 / 玻璃 / 拖动 / 滚动折叠 各层可独立启用禁用，关闭 = 该层不进渲染树）'
       ],
       secTitle: '组合件：悬浮导航栏（原子拼装）',
-      secTip: '在内容区上下滑动可触发滚动折叠；拖动导航栏指示器可切换页面；下方开关可实时启用/禁用每个原子件层。',
       pgLabel: '示例', pgDesc: '当前页面内容 · 由导航栏切换',
       l1: '悬浮层', l2: '玻璃层', l3: '拖动层', l4: '滚动折叠',
-      navLabel: '示例'
+      p: ['示例内容 · 向下滚动，配合滚动折叠层。', '示例内容 · 继续向下。', '示例内容 · 导航栏下滑隐藏、上滑展开。', '示例内容 · 拖动指示器切换页面。', '示例内容 · 底部开关可实时启停每个原子层。', '示例内容 · 末尾。']
     },
     en: {
       clTitle: 'CHANGELOG',
       clVer: 'v1.0 <span class="tag">Atom Assembly</span><span class="cl-date">2026-10-13</span>',
       clItems: [
-        'Composite: EGDFloatingWidget + EGDLiquidGlass + EGDDragSwipe + EGDScrollHide + config toggles',
-        'Assembly only, no new logic; each feature layer independently togglable (off = layer not in the render tree)',
-        'Drag-follow / press scale 1.15× / elastic snap / tap-to-switch / scroll hide'
+        'Floating nav bar composite v1.0 "Atom Assembly": EGDFloatingWidget + EGDLiquidGlass + EGDDragSwipe + EGDScrollHide (optional) + config toggles, assembly only',
+        'Refactored from legacy floating_nav v1.1 "Squircle Centered": old module decomposed into atoms, all capabilities carried over',
+        'Inherited & kept: 4 sample tabs · squircle indicator (radius 18px) strictly centered · drag-follow · press scale 1.15× · elastic snap · tap-to-switch · boundary bounce',
+        'Added: scroll hide (hide on scroll down / show on scroll up) · feature toggle panel (float / glass / drag / scroll-hide independently togglable; off = layer not in the render tree)'
       ],
       secTitle: 'Composite: Floating Nav Bar (atom assembly)',
-      secTip: 'Scroll the content area to trigger scroll-hide; drag the indicator to switch pages; toggles below enable/disable each atom layer live.',
       pgLabel: 'Example', pgDesc: 'Current page content · switched by the nav bar',
       l1: 'Float layer', l2: 'Glass layer', l3: 'Drag layer', l4: 'Scroll Hide',
-      navLabel: 'Example'
+      p: ['Sample content · scroll down for scroll-hide.', 'Sample content · keep going.', 'Sample content · nav hides on scroll down, returns on scroll up.', 'Sample content · drag the indicator to switch pages.', 'Sample content · toggles below enable/disable each atom layer live.', 'Sample content · end.']
     }
   };
   var lang = 'zh';
   var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
   var navLabels = Array.prototype.slice.call(document.querySelectorAll('.nav-label'));
   var pgLabels = Array.prototype.slice.call(document.querySelectorAll('.pg-label'));
+  var paras = Array.prototype.slice.call(document.querySelectorAll('.para'));
 
-  /* 组合件状态：功能层开关 */
+  /* 功能层开关（四个全部真实生效） */
   var feats = { floating: true, glass: true, drag: true, scrollHide: true };
   var switches = Array.prototype.slice.call(document.querySelectorAll('.switch[data-feat]'));
   switches.forEach(function (s) {
@@ -183,9 +168,10 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     var nav = document.getElementById('floatNav');
     nav.classList.toggle('plain', !feats.glass);
     if (!feats.floating) nav.style.display = 'none'; else nav.style.display = '';
+    if (!isHidden && feats.scrollHide) { /* 保持当前可见态 */ }
   }
 
-  /* 导航交互：跟手拖动 + 点击切换 */
+  /* 导航交互：跟手拖动 + 点击切换（drag 层关闭时禁用） */
   var wrap = document.getElementById('navWrap');
   var pill = document.getElementById('navPill');
   var items = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
@@ -207,6 +193,9 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     }
   }
   wrap.addEventListener('pointerdown', function (e) {
+    if (!feats.drag) { // drag 层关闭：仅允许点击切换，不进入拖动
+      return;
+    }
     dragging = true; moved = false;
     downX = e.clientX; downY = e.clientY;
     var wr = wrap.getBoundingClientRect(), pr = pill.getBoundingClientRect();
@@ -217,7 +206,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     wrap.classList.add('dragging');
   });
   wrap.addEventListener('pointermove', function (e) {
-    if (!dragging) return;
+    if (!dragging || !feats.drag) return;
     if (!moved && (Math.abs(e.clientX - downX) > MOVE_TOL || Math.abs(e.clientY - downY) > MOVE_TOL)) moved = true;
     if (!moved) return;
     var wr = wrap.getBoundingClientRect();
@@ -243,8 +232,14 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   }
   wrap.addEventListener('pointerup', endDrag);
   wrap.addEventListener('pointercancel', endDrag);
+  // 点击切换（drag 关闭时仍可用，等同 onTap 上报）
+  items.forEach(function (it) {
+    it.addEventListener('click', function () {
+      select(parseInt(it.getAttribute('data-index'), 10), true);
+    });
+  });
 
-  /* 滚动折叠：下滑隐藏 / 上滑展开 */
+  /* 滚动折叠：下滑隐藏 / 上滑展开（scrollHide 层关闭时不响应） */
   var scrollArea = document.getElementById('scrollArea');
   var floatNav = document.getElementById('floatNav');
   var lastOffset = 0, accumulated = 0, isHidden = false;
@@ -264,14 +259,14 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     document.getElementById('clVer').innerHTML = d.clVer;
     document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
     document.getElementById('secTitle').textContent = d.secTitle;
-    document.getElementById('secTip').textContent = d.secTip;
     document.getElementById('pgDesc').textContent = d.pgDesc;
     document.getElementById('l1').innerHTML = d.l1 + ' <small>EGDFloatingWidget</small>';
     document.getElementById('l2').innerHTML = d.l2 + ' <small>EGDLiquidGlass</small>';
     document.getElementById('l3').innerHTML = d.l3 + ' <small>EGDDragSwipe</small>';
     document.getElementById('l4').innerHTML = d.l4 + ' <small>EGDScrollHide</small>';
-    navLabels.forEach(function (el) { el.textContent = d.navLabel; });
+    navLabels.forEach(function (el) { el.textContent = d.pgLabel; });
     pgLabels.forEach(function (el) { el.textContent = d.pgLabel; });
+    paras.forEach(function (el, i) { el.textContent = d.p[i]; });
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
   }
