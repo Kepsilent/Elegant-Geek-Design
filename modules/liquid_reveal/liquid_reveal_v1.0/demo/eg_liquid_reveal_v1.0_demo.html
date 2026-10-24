@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD LiquidReveal v1.0</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700; font-display: swap;
+}
+:root {
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 480px; margin: 0 auto; padding: 24px 20px 60px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
+.stage { position: relative; height: 320px; border-radius: 24px; overflow: hidden; border: 0.5px solid #E5E5EA; }
+.layer { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+.layer-a { background: linear-gradient(135deg, #F0F9F5 0%, #E8F2EF 50%, #DCEFE8 100%); }
+.layer-b { background: linear-gradient(135deg, #1D1D1F 0%, #2A2A2E 50%, #3A3A40 100%); color: #fff; }
+.layer-a .big { font-size: 22px; font-weight: 700; }
+.layer-a .sub { font-size: 13px; color: var(--text-2); margin-top: 8px; }
+.layer-b .big { font-size: 22px; font-weight: 700; }
+.layer-b .sub { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+.reveal-clip { position: absolute; inset: 0; clip-path: circle(0% at 50% 50%); will-change: clip-path; }
+.reveal-clip.show { transition: clip-path 560ms cubic-bezier(0.65,0,0.35,1); clip-path: circle(141% at 50% 50%); }
+.reveal-clip.from-left { clip-path: circle(0% at 20% 50%); }
+.reveal-clip.from-left.show { clip-path: circle(141% at 20% 50%); }
+.reveal-clip.from-right { clip-path: circle(0% at 80% 50%); }
+.reveal-clip.from-right.show { clip-path: circle(141% at 80% 50%); }
+.controls { margin-top: 16px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn { border: none; cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 999px; background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); transition: transform 200ms ease; }
+.btn:active { transform: scale(0.94); }
+.hint { margin-top: 14px; text-align: center; font-size: 12.5px; color: var(--text-3); }
+.hint .key { display: inline-block; background: var(--accent-glass); color: var(--accent-text); border-radius: 6px; padding: 1px 8px; font-weight: 600; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-ver" id="clVer"></div>
+    <ul class="cl-list" id="clList"></ul>
+  </section>
+
+  <div class="sec-title" id="secTitle">液态浸染转场 EGDLiquidReveal · 水浸揭晓</div>
+  <div class="stage" id="stage">
+    <div class="layer layer-a">
+      <div class="big" id="bigA">界面 A</div>
+      <div class="sub" id="subA">点击下方按钮 → B 像水一样漫过来</div>
+    </div>
+    <div class="layer layer-b reveal-clip" id="layerB">
+      <div class="big" id="bigB">界面 B</div>
+      <div class="sub" id="subB">从按钮处浸染覆盖 · 圈边高光</div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="btn" id="btnCenter" type="button">中心揭晓</button>
+    <button class="btn" id="btnLeft" type="button">左侧浸入</button>
+    <button class="btn" id="btnRight" type="button">右侧浸入</button>
+    <button class="btn" id="btnBack" type="button" style="background:#F5F5F7;color:var(--text-2);border-color:var(--glass-border);">退回 A</button>
+  </div>
+  <div class="hint" id="hint">选择起点 → B 界面以<span class="key">圆形水浸</span>覆盖 A</div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0 <span class="tag">水浸揭晓</span><span class="cl-date">2026-10-24</span>',
+      clItems: ['液态浸染转场原子件 v1.0「水浸揭晓」：从触发点圆形扩散揭晓，弹性曲线 + 圈边高光', '配合 Stack/IndexedStack 做页面级覆盖转场：B 从按钮处像水一样浸染覆盖 A'],
+      secTitle: '液态浸染转场 EGDLiquidReveal · 水浸揭晓',
+      bigA: '界面 A', subA: '点击下方按钮 → B 像水一样漫过来',
+      bigB: '界面 B', subB: '从按钮处浸染覆盖 · 圈边高光',
+      btnCenter: '中心揭晓', btnLeft: '左侧浸入', btnRight: '右侧浸入', btnBack: '退回 A',
+      hint: '选择起点 → B 界面以<span class="key">圆形水浸</span>覆盖 A'
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0 <span class="tag">Water Immersion</span><span class="cl-date">2026-10-24</span>',
+      clItems: ['Liquid immersion transition atom v1.0 "Water Immersion": circular reveal from a trigger point, elastic curve + edge glow', 'Pair with Stack/IndexedStack for page-level overlay: B soaks over A from the button'],
+      secTitle: 'Liquid Reveal EGDLiquidReveal · water immersion',
+      bigA: 'Page A', subA: 'Tap a button → B soaks in like water',
+      bigB: 'Page B', subB: 'Immerses from the button · edge glow',
+      btnCenter: 'Center reveal', btnLeft: 'Left soak', btnRight: 'Right soak', btnBack: 'Back to A',
+      hint: 'Pick an origin → B covers A with a<span class="key">circular soak</span>'
+    }
+  };
+  var lang = 'zh';
+  var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
+  var layerB = document.getElementById('layerB');
+
+  function reveal(originCls) {
+    layerB.className = 'layer layer-b reveal-clip ' + originCls;
+    // 强制回流后加 show，触发 clip-path 过渡
+    void layerB.offsetWidth;
+    layerB.classList.add('show');
+  }
+  function backToA() {
+    layerB.classList.remove('show');
+  }
+  document.getElementById('btnCenter').addEventListener('click', function () { reveal(''); });
+  document.getElementById('btnLeft').addEventListener('click', function () { reveal('from-left'); });
+  document.getElementById('btnRight').addEventListener('click', function () { reveal('from-right'); });
+  document.getElementById('btnBack').addEventListener('click', backToA);
+
+  function render() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    document.getElementById('clVer').innerHTML = d.clVer;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    document.getElementById('secTitle').textContent = d.secTitle;
+    document.getElementById('bigA').textContent = d.bigA;
+    document.getElementById('subA').textContent = d.subA;
+    document.getElementById('bigB').textContent = d.bigB;
+    document.getElementById('subB').textContent = d.subB;
+    document.getElementById('btnCenter').textContent = d.btnCenter;
+    document.getElementById('btnLeft').textContent = d.btnLeft;
+    document.getElementById('btnRight').textContent = d.btnRight;
+    document.getElementById('btnBack').textContent = d.btnBack;
+    document.getElementById('hint').innerHTML = d.hint;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); }); });
+  render();
+})();
+</script>
+</body>
+</html>
