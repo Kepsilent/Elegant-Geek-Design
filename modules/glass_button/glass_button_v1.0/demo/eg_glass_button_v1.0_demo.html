@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGD GlassButton v1.0</title>
+<style>
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf") format("truetype");
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../../../assets/fonts/lxgw-wenkai/LXGWWenKai-Medium.ttf") format("truetype");
+  font-weight: 500 700; font-display: swap;
+}
+:root {
+  --bg: #FFFFFF; --text: #1D1D1F; --text-2: #6E6E73; --text-3: #AEAEB2;
+  --accent: #00C48C; --accent-text: #007A55; --accent-glass: rgba(0,196,140,0.14);
+  --accent-border: rgba(0,196,140,0.25);
+  --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(0,0,0,0.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.95);
+  --font: "LXGW WenKai", "霞鹜文楷", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); }
+.wrap { max-width: 480px; margin: 0 auto; padding: 24px 20px 60px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-highlight); margin-bottom: 20px; }
+.lang-toggle button { border: none; background: transparent; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--text-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent-glass); border: 0.5px solid var(--accent-border); color: var(--accent-text); }
+.changelog { border-radius: 18px; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-highlight); padding: 16px 20px; margin-bottom: 24px; }
+.cl-title { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: 1px; margin-bottom: 12px; }
+.cl-ver { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cl-ver .tag { font-size: 11px; font-weight: 600; color: var(--accent-text); background: var(--accent-glass); border: 0.5px solid var(--accent-border); border-radius: 999px; padding: 1px 8px; }
+.cl-date { font-size: 11px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+.cl-list { list-style: none; }
+.cl-list li { font-size: 13.5px; color: var(--text-2); line-height: 1.7; padding-left: 14px; position: relative; }
+.cl-list li::before { content: ''; position: absolute; left: 1px; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.sec-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; }
+.stage { border-radius: 24px; background: linear-gradient(135deg, #DFF3EA 0%, #E8F2EF 50%, #DDE9F2 100%); border: 0.5px solid #E5E5EA; padding: 44px 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; min-height: 260px; }
+.glass-btn { border: none; cursor: pointer; font-family: var(--font); font-size: 15px; font-weight: 700; color: var(--text); padding: 14px 36px; border-radius: 20px; background: rgba(255,255,255,0.55); border: 0.5px solid rgba(255,255,255,0.6); box-shadow: 0 8px 24px rgba(0,0,0,0.10), 0 1px 0 rgba(255,255,255,1), 0 2px 4px rgba(0,0,0,0.06); transition: transform 200ms cubic-bezier(0.34,1.56,0.64,1); -webkit-tap-highlight-color: transparent; }
+.glass-btn:active { transform: scale(0.94); }
+.glass-btn.accent { color: var(--accent-text); }
+.glass-btn.round { width: 84px; height: 84px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.glass-btn svg { width: 30px; height: 30px; }
+.hint { margin-top: 14px; text-align: center; font-size: 12.5px; color: var(--text-3); }
+.hint .key { display: inline-block; background: var(--accent-glass); color: var(--accent-text); border-radius: 6px; padding: 1px 8px; font-weight: 600; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="lang-toggle" id="langToggle">
+    <button type="button" class="active" data-lang="zh">中文</button>
+    <button type="button" data-lang="en">English</button>
+  </div>
+  <section class="changelog">
+    <div class="cl-title" id="clTitle">更新日志 CHANGELOG</div>
+    <div class="cl-ver" id="clVer"></div>
+    <ul class="cl-list" id="clList"></ul>
+  </section>
+
+  <div class="sec-title" id="secTitle">液态玻璃按钮 EGDGlassButton · 按压缩小回弹</div>
+  <div class="stage">
+    <button class="glass-btn" id="btnA" type="button">继续</button>
+    <button class="glass-btn accent" id="btnB" type="button">立即体验</button>
+    <button class="glass-btn round" id="btnC" type="button" aria-label="播放"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3 14 9-14 9V3z"/></svg></button>
+  </div>
+  <div class="hint" id="hint">按下 → 缩小 <span class="key">0.94×</span>；松开 → 弹性回弹</div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var I18N = {
+    zh: {
+      clTitle: '更新日志 CHANGELOG',
+      clVer: 'v1.0 <span class="tag">玻璃按钮</span><span class="cl-date">2026-10-24</span>',
+      clItems: ['液态玻璃按钮原子件 v1.0「玻璃按钮」：参数化复刻 iOS 26 液态玻璃（模糊底 + 高光边 + 内阴影）', '交互：按压缩小 0.94×、松手回弹（easeOutBack）'],
+      secTitle: '液态玻璃按钮 EGDGlassButton · 按压缩小回弹',
+      btnA: '继续', btnB: '立即体验',
+      hint: '按下 → 缩小 <span class="key">0.94×</span>；松开 → 弹性回弹'
+    },
+    en: {
+      clTitle: 'CHANGELOG',
+      clVer: 'v1.0 <span class="tag">Glass Button</span><span class="cl-date">2026-10-24</span>',
+      clItems: ['Liquid glass button atom v1.0 "Glass Button": parameterized iOS 26 liquid glass (blur base + highlight edge + inner shadow)', 'Interaction: press shrinks 0.94×, release bounces (easeOutBack)'],
+      secTitle: 'Liquid Glass Button EGDGlassButton · press shrink / bounce',
+      btnA: 'Continue', btnB: 'Try now',
+      hint: 'Press → shrink <span class="key">0.94×</span>; release → elastic bounce'
+    }
+  };
+  var lang = 'zh';
+  var btns = Array.prototype.slice.call(document.getElementById('langToggle').querySelectorAll('button'));
+  function render() {
+    var d = I18N[lang];
+    document.getElementById('clTitle').textContent = d.clTitle;
+    document.getElementById('clVer').innerHTML = d.clVer;
+    document.getElementById('clList').innerHTML = d.clItems.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+    document.getElementById('secTitle').textContent = d.secTitle;
+    document.getElementById('btnA').textContent = d.btnA;
+    document.getElementById('btnB').textContent = d.btnB;
+    document.getElementById('hint').innerHTML = d.hint;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { lang = b.getAttribute('data-lang'); render(); }); });
+  render();
+})();
+</script>
+</body>
+</html>
