@@ -80,7 +80,32 @@ class EGDSpotIndicator extends StatelessWidget {
                   ),
               ],
             ),
-            child: child,
+            child: Stack(
+              children: [
+                Positioned.fill(child: child),
+                // 水滴高光点：左上椭圆亮斑，模拟水滴/放大镜表面反光
+                Positioned(
+                  top: size * 0.17,
+                  left: size * 0.21,
+                  child: IgnorePointer(
+                    child: Container(
+                      width: size * 0.20,
+                      height: size * 0.12,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.85),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white.withValues(alpha: 0.45),
+                            blurRadius: 5,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
