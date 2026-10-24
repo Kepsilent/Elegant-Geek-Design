@@ -92,11 +92,32 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
   <div class="section-title" id="tToggle">Toggle 开关</div>
   <div class="frame-card"><iframe src="../../../modules/toggle/toggle_v1.0/demo/eg_toggle_v1.0_demo.html" loading="lazy" title="Toggle"></iframe></div>
 
+  <div class="section-title" id="tSpot">Spot 悬浮圆钮</div>
+  <div class="frame-card"><iframe src="../../../modules/spot/spot_v1.0/demo/eg_spot_v1.0_demo.html" loading="lazy" title="Spot"></iframe></div>
+
+  <div class="section-title" id="tSpotIndicator">Spot Indicator 聚焦选框</div>
+  <div class="frame-card"><iframe src="../../../modules/spot_indicator/spot_indicator_v1.0/demo/eg_spot_indicator_v1.0_demo.html" loading="lazy" title="Spot Indicator"></iframe></div>
+
+  <div class="section-title" id="tLiquidReveal">Liquid Reveal 液态浸染</div>
+  <div class="frame-card"><iframe src="../../../modules/liquid_reveal/liquid_reveal_v1.0/demo/eg_liquid_reveal_v1.0_demo.html" loading="lazy" title="Liquid Reveal"></iframe></div>
+
+  <div class="section-title" id="tInkSpread">Ink Spread 墨迹漫开</div>
+  <div class="frame-card"><iframe src="../../../modules/ink_spread/ink_spread_v1.0/demo/eg_ink_spread_v1.0_demo.html" loading="lazy" title="Ink Spread"></iframe></div>
+
+  <div class="section-title" id="tSticker">Sticker 贴纸装饰</div>
+  <div class="frame-card"><iframe src="../../../modules/sticker/sticker_v1.0/demo/eg_sticker_v1.0_demo.html" loading="lazy" title="Sticker"></iframe></div>
+
+  <div class="section-title" id="tGlassButton">Glass Button 液态玻璃按钮</div>
+  <div class="frame-card"><iframe src="../../../modules/glass_button/glass_button_v1.0/demo/eg_glass_button_v1.0_demo.html" loading="lazy" title="Glass Button"></iframe></div>
+
   <div class="section-title" id="tComp">组合控件 <span class="tag">Composite · 原子拼装</span></div>
   <div class="section-desc" id="dComp">只把原子件拼装在一起，不写新逻辑。</div>
 
   <div class="section-title" id="tNavBar">Floating Nav Bar 悬浮导航栏</div>
   <div class="frame-card tall"><iframe src="../../../modules/floating_nav_bar/floating_nav_bar_v1.0/demo/eg_floating_nav_bar_v1.0_demo.html" loading="lazy" title="Floating Nav Bar"></iframe></div>
+
+  <div class="section-title" id="tSplitNav">Split Nav Bar 分离式导航</div>
+  <div class="frame-card tall"><iframe src="../../../modules/split_nav_bar/split_nav_bar_v1.0/demo/eg_split_nav_bar_v1.0_demo.html" loading="lazy" title="Split Nav Bar"></iframe></div>
 
   <p class="note" id="note">注：各 Demo 内的语言切换按钮控制该组件自身界面；本页顶部切换控制总览标题。第三方字体/图标未随仓库发布，预览时回退系统字体。</p>
 </main>
@@ -109,36 +130,42 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
       clTitle: '更新日志 CHANGELOG',
       clItems: [
         'EGD 总览页改为组合模式：以 iframe 嵌入全部原子件 + 组合件 Demo，单一事实来源，组件 Demo 更新即同步',
-        '原子层：Color / Liquid Glass / Drag Swipe / Floating Widget / Scroll Hide / Toggle',
-        '组合层：Floating Nav Bar（悬浮 + 玻璃 + 拖动 + 滚动折叠 拼装）'
+        '原子层：Color / Liquid Glass / Drag Swipe / Floating Widget / Scroll Hide / Toggle / Spot / Spot Indicator / Liquid Reveal / Ink Spread / Sticker / Glass Button',
+        '组合层：Floating Nav Bar（悬浮 + 玻璃 + 拖动 + 滚动折叠 拼装）、Split Nav Bar（分离式导航拼装）'
       ],
       heroDesc: 'EGD 总览页：按「原子控件 → 组合控件」两级架构，把每个组件的可交互 Demo 汇集于此。每个 Demo 都可独立操作、自带中英切换。',
       tAtoms: '原子控件', dAtoms: '各自独立、装饰器式包裹，可单独取用。',
       tColor: 'Color 色板', tGlass: 'Liquid Glass 液态玻璃', tDrag: 'Drag Swipe 拖动滑动',
       tFloat: 'Floating Widget 悬浮控件', tScroll: 'Scroll Hide 滚动折叠', tToggle: 'Toggle 开关',
+      tSpot: 'Spot 悬浮圆钮', tSpotIndicator: 'Spot Indicator 聚焦选框',
+      tLiquidReveal: 'Liquid Reveal 液态浸染', tInkSpread: 'Ink Spread 墨迹漫开',
+      tSticker: 'Sticker 贴纸装饰', tGlassButton: 'Glass Button 液态玻璃按钮',
       tComp: '组合控件', dComp: '只把原子件拼装在一起，不写新逻辑。',
-      tNavBar: 'Floating Nav Bar 悬浮导航栏',
+      tNavBar: 'Floating Nav Bar 悬浮导航栏', tSplitNav: 'Split Nav Bar 分离式导航',
       note: '注：各 Demo 内的语言切换按钮控制该组件自身界面；本页顶部切换控制总览标题。第三方字体/图标未随仓库发布，预览时回退系统字体。'
     },
     en: {
       clTitle: 'CHANGELOG',
       clItems: [
         'EGD overview is now a composition: embeds every atom + composite demo via iframe (single source of truth; updates propagate automatically)',
-        'Atoms: Color / Liquid Glass / Drag Swipe / Floating Widget / Scroll Hide / Toggle',
-        'Composite: Floating Nav Bar (float + glass + drag + scroll-hide assembled)'
+        'Atoms: Color / Liquid Glass / Drag Swipe / Floating Widget / Scroll Hide / Toggle / Spot / Spot Indicator / Liquid Reveal / Ink Spread / Sticker / Glass Button',
+        'Composites: Floating Nav Bar (float + glass + drag + scroll-hide assembled), Split Nav Bar (split navigation assembled)'
       ],
       heroDesc: 'EGD overview: every interactive demo gathered under a two-tier "atoms → composites" architecture. Each demo is self-contained with its own ZH/EN switch.',
       tAtoms: 'Atoms', dAtoms: 'Independent, decorator-style wrappers; usable on their own.',
       tColor: 'Color Palette', tGlass: 'Liquid Glass', tDrag: 'Drag Swipe',
       tFloat: 'Floating Widget', tScroll: 'Scroll Hide', tToggle: 'Toggle Switch',
+      tSpot: 'Spot Round Button', tSpotIndicator: 'Spot Indicator Focus Frame',
+      tLiquidReveal: 'Liquid Reveal', tInkSpread: 'Ink Spread',
+      tSticker: 'Sticker Decor', tGlassButton: 'Glass Button',
       tComp: 'Composites', dComp: 'Assembles atoms only; no new logic.',
-      tNavBar: 'Floating Nav Bar',
+      tNavBar: 'Floating Nav Bar', tSplitNav: 'Split Nav Bar',
       note: 'Note: the language button inside each demo toggles that component UI; the top toggle controls overview titles. Third-party fonts/icons are not shipped in the repo and fall back to system fonts in preview.'
     }
   };
   var lang = 'zh';
   var btns = Array.prototype.slice.call(document.querySelectorAll('#langToggle button'));
-  var ids = ['heroDesc','clTitle','tAtoms','dAtoms','tColor','tGlass','tDrag','tFloat','tScroll','tToggle','tComp','dComp','tNavBar','note'];
+  var ids = ['heroDesc','clTitle','tAtoms','dAtoms','tColor','tGlass','tDrag','tFloat','tScroll','tToggle','tSpot','tSpotIndicator','tLiquidReveal','tInkSpread','tSticker','tGlassButton','tComp','dComp','tNavBar','tSplitNav','note'];
 
   function render() {
     var d = I18N[lang];
