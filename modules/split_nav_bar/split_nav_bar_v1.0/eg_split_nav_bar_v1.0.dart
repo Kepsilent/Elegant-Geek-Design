@@ -82,7 +82,7 @@ class EGDSplitNavBar extends StatelessWidget {
           bottom: c.bottomOffset,
           child: _buildSpot(items[1], 1, c),
         ),
-        // 空选框：跨屏弹性移动（左钮中心 ⇄ 右钮中心）
+        // 空选框：水滴放大镜——跨屏弹性移动，内部放大显示选中项（1.3×）
         if (c.indicator)
           AnimatedPositioned(
             left: c.sideOffset +
@@ -95,7 +95,10 @@ class EGDSplitNavBar extends StatelessWidget {
             child: EGDSpotIndicator(
               size: c.indicatorSize,
               active: indicatorActive,
-              child: SizedBox.shrink(),
+              child: Transform.scale(
+                scale: 1.3,
+                child: items[selectedIndex],
+              ),
             ),
           ),
       ],
