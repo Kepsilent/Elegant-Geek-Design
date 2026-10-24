@@ -71,11 +71,11 @@ class EGDSpotIndicator extends StatelessWidget {
                   blurRadius: 18,
                   offset: const Offset(0, 8),
                 ),
-                // 选中态淡淡翠绿光晕（非描边）
+                // 选中态中性亮边（透明玻璃，不强调颜色）
                 if (active)
                   const BoxShadow(
-                    color: Color(0x2200C48C),
-                    blurRadius: 26,
+                    color: Color(0x14FFFFFF),
+                    blurRadius: 20,
                     spreadRadius: 1,
                   ),
               ],
