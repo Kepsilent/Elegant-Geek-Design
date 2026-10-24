@@ -40,6 +40,13 @@ EGD 是一套跨平台自适应设计系统：**原子控件层（基层基座�
 | scroll_hide 滚动折叠 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/scroll_hide/scroll_hide_v1.0/demo/eg_scroll_hide_v1.0_demo.html) | [eg_scroll_hide_v1.0.dart](modules/scroll_hide/scroll_hide_v1.0/eg_scroll_hide_v1.0.dart) |
 | toggle 功能开关 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/toggle/toggle_v1.0/demo/eg_toggle_v1.0_demo.html) | [eg_toggle_v1.0.dart](modules/toggle/toggle_v1.0/eg_toggle_v1.0.dart) |
 | floating_nav_bar 悬浮导航栏 | 组合 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/floating_nav_bar/floating_nav_bar_v1.0/demo/eg_floating_nav_bar_v1.0_demo.html) | [eg_floating_nav_bar_v1.0.dart](modules/floating_nav_bar/floating_nav_bar_v1.0/eg_floating_nav_bar_v1.0.dart) |
+| spot 悬浮圆钮 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/spot/spot_v1.0/demo/eg_spot_v1.0_demo.html) | [eg_spot_v1.0.dart](modules/spot/spot_v1.0/eg_spot_v1.0.dart) |
+| spot_indicator 聚焦选框 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/spot_indicator/spot_indicator_v1.0/demo/eg_spot_indicator_v1.0_demo.html) | [eg_spot_indicator_v1.0.dart](modules/spot_indicator/spot_indicator_v1.0/eg_spot_indicator_v1.0.dart) |
+| liquid_reveal 液态浸染 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/liquid_reveal/liquid_reveal_v1.0/demo/eg_liquid_reveal_v1.0_demo.html) | [eg_liquid_reveal_v1.0.dart](modules/liquid_reveal/liquid_reveal_v1.0/eg_liquid_reveal_v1.0.dart) |
+| ink_spread 墨迹漫开 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/ink_spread/ink_spread_v1.0/demo/eg_ink_spread_v1.0_demo.html) | [eg_ink_spread_v1.0.dart](modules/ink_spread/ink_spread_v1.0/eg_ink_spread_v1.0.dart) |
+| sticker 贴纸装饰 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/sticker/sticker_v1.0/demo/eg_sticker_v1.0_demo.html) | [eg_sticker_v1.0.dart](modules/sticker/sticker_v1.0/eg_sticker_v1.0.dart) |
+| glass_button 液态玻璃按钮 | 原子 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/glass_button/glass_button_v1.0/demo/eg_glass_button_v1.0_demo.html) | [eg_glass_button_v1.0.dart](modules/glass_button/glass_button_v1.0/eg_glass_button_v1.0.dart) |
+| split_nav_bar 分离式导航 | 组合 | v1.0 | [在线预览](https://kepsilent.github.io/Elegant-Geek-Design/modules/split_nav_bar/split_nav_bar_v1.0/demo/eg_split_nav_bar_v1.0_demo.html) | [eg_split_nav_bar_v1.0.dart](modules/split_nav_bar/split_nav_bar_v1.0/eg_split_nav_bar_v1.0.dart) |
 
 > 提示：demo 完整字体效果需下载便携包（含霞鹜文楷 ttf）；Pages 在线预览时字体回退为系统字体，交互不受影响。
 
